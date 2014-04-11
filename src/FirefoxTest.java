@@ -1,12 +1,10 @@
+package src;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.io.BufferedWriter;
-import java.io.CharArrayWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -320,19 +318,6 @@ public class FirefoxTest {
 	}
 
 	
-	public void documentCreate(String name, String value) {
-		try {
-			File flt = new File(name + ".txt");
-			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(flt)));
-			out.print(value);
-			out.flush();
-			System.out.println("Output is generated in a file " + name + ".txt");				
-		}
-		catch (IOException error) {
-			
-		}
-	 
-	}
 
 		
 }
