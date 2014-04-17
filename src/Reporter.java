@@ -17,7 +17,7 @@ public class Reporter {
 	private int pageNotFoundCount = 0;
 	private int visitedPagesCount = 0;
 	private List<String> errorMessages = new ArrayList<String>();
-
+	
 	public void visitedPagesAdd() {
 		this.visitedPagesCount++;
 	}
@@ -31,7 +31,7 @@ public class Reporter {
 	}
 	
 	public void formSubmittedAdd() {
-		this.formErrorsCount++;
+		this.formSubmittedCount++;
 	}
 
 	public void accessDeniedAdd() {
@@ -58,19 +58,19 @@ public class Reporter {
 		}
 	}
 
-	public void reportFile() {
+	public void reportFile(String fileName, String filePath) {
 		//Create result file
 		String value = "Visited pages count  = " + this.visitedPagesCount + "\n";
 		value = value + "Pages containing errors  = " + this.errorsCount + "\n";
 		for (int i = 0; i < this.errorMessages.size(); i++) {
 			value += this.errorMessages.get(i) + "\n";
 		}
-		this.documentCreate("Test_result", value);
+		this.documentCreate(fileName, filePath, value);
 	}
 
-	public void documentCreate(String name, String value) {
+	public void documentCreate(String name, String path, String value) {
 		try {
-			File flt = new File(name + ".txt");
+			File flt = new File(path + "\\" + name + ".txt");
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(flt)));
 			out.print(value);
 			out.flush();
@@ -78,7 +78,7 @@ public class Reporter {
 			out.close();
 		}
 		catch (IOException error) {
-			
+			error.printStackTrace();
 		}
 	}
 }

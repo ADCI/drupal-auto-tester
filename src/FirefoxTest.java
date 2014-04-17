@@ -12,7 +12,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.InvalidElementStateException;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -59,16 +58,21 @@ public class FirefoxTest {
 	}
 
 	public void takeScreenshot(String filename) {
-		File scrFile = ((TakesScreenshot) driver)
-				.getScreenshotAs(OutputType.FILE);
+		filename = this.filterScreenshotFileName(filename);
+		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
-			FileUtils.copyFile(scrFile, new File(this.filePath + "\\"
-					+ filename + ".png"));
+			FileUtils.copyFile(scrFile, new File(this.filePath + "\\" + filename + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public String filterScreenshotFileName(String fileName) {
+		fileName = fileName.replaceAll("/", "-");
+		fileName = fileName.replaceAll("http://", "");
+		return fileName;
+	}
+	
 	public void loginAs(String username, String password) {
 		driver.findElement(By.name("name")).sendKeys(username);
 		driver.findElement(By.name("pass")).sendKeys(password);
