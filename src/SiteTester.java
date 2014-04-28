@@ -7,84 +7,89 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 public class SiteTester {
 	
-	public FirefoxTest ff;
-	public Reporter reporter;
+	private BrowserDriver browser;
+	private Reporter reporter;
+	private DrupalController drupal;
+	private
+	int browserType = 2; // 1 - firefox, 2 - chrome.
 	final private String filePath = "C:/drupal-test";
-	final private String reportName = "report";
+	final private String reportName = "report.log";
 	private String testUserLogin = "";
 	private String testUserPass = "";
-	final private String host = "http://127.0.0.1:4567";
+	final private String host = "http://10.1.0.124:81";
 	private String accessDeniedPageTitle = "Access denied";
 	private String pageNotFoundTitle = "Page not found";
-	int needLogin = 0; // 0 - no login, 1 - login required, 2 - random login.
-	boolean fillForms = false;
-	boolean resize = true;
-	boolean takeScreenshots = true;
-	private final int screenHeight = 600;
+	private int needLogin = 0; // 0 - no login, 1 - login required, 2 - random login.
+	private boolean fillForms = true;
+	private boolean resize = true;
+	private boolean takeScreenshots = true;
+	private final int screenHeight = 700;
+	private Dimension defaultBrowserDimension = new Dimension(1200, this.screenHeight);
 	private List<Dimension> resolutions = new ArrayList<Dimension>();
 	//Links params filters
 	boolean getParamsFilter = true;
-	boolean visitOnlyCurrentHost = true;		
+	boolean visitOnlyCurrentHost = true;
 	
 	private List<String> dontVisitPages = new ArrayList<String>();
 	private List<String> visitedPages = new ArrayList<String>();
 	private List<String> pagesToVisit = new ArrayList<String>();
-	private boolean collectLinks = false;
+	private boolean collectLinks = true;
 	private List<String> dontFillForm = new ArrayList<String>();
 	Map<String, String> parentagePagesPaths = new HashMap<String, String>();
 	
 	// Class constructor.
-	public SiteTester() {
-		this.ff = new FirefoxTest(this.filePath);
+	SiteTester() {
+		this.browser = new BrowserDriver(this.filePath, this.browserType);
 		this.reporter = new Reporter();
+		this.drupal = new DrupalController(this.browser);
 		// Pages to visit for sure.
 		this.pagesToVisit.add(this.getHost());
 		this.pagesToVisit.add(this.getHost() + "/user");
-		this.pagesToVisit.add(this.getHost() + "/user/login");
-		this.pagesToVisit.add(this.getHost() + "/test");
-		this.pagesToVisit.add(this.getHost() + "/node/176381");
+		this.pagesToVisit.add(this.getHost() + "/user/register");
+		this.pagesToVisit.add(this.getHost() + "/user/password");
+		this.pagesToVisit.add(this.getHost() + "/test-page-not-found");
+		this.pagesToVisit.add(this.getHost() + "/admin/settings");
 		// Add don't visit pages.
-		this.dontVisitPages.add(this.getHost() + "/user/logout");
-		this.dontFillForm.add("user-login-form");
-		this.dontFillForm.add("user-register-form");
+		//this.dontVisitPages.add(this.getHost() + "/user/logout");
+		//this.dontFillForm.add("user-login-form");
+		//this.dontFillForm.add("user-register-form");
 		// Add resolutions.
-		this.resolutions.add(new Dimension(320, this.screenHeight));
-		this.resolutions.add(new Dimension(980, this.screenHeight));
+		//this.resolutions.add(new Dimension(320, this.screenHeight));
+		//this.resolutions.add(new Dimension(980, this.screenHeight));
 		this.resolutions.add(new Dimension(1024, this.screenHeight));
-		this.resolutions.add(new Dimension(1250, this.screenHeight));
+		this.resolutions.add(new Dimension(1400, this.screenHeight));
 	}
 		
-	public String getHost() {
+	private String getHost() {
 		return this.host;
 	}
 
-	public String getTestUserLogin() {
+	private String getTestUserLogin() {
 		return this.testUserLogin;
 	}
 
-	public String getTestUserPass() {
+	private String getTestUserPass() {
 		return this.testUserPass;
 	}
 
-	public boolean login() {
-		this.ff.getPage(this.getHost());
-		this.ff.loginAs(this.getTestUserLogin(), this.getTestUserPass());
+	private boolean login() {
+		this.browser.getPage(this.getHost());
+		this.browser.loginAs(this.getTestUserLogin(), this.getTestUserPass());
 		return true;
 	}
 	
-	public boolean loginProcess() {
+	private boolean loginProcess() {
 		if (this.needLogin == 1) {
 			return this.login();
 		}
 		else if (this.needLogin == 2) {
-			boolean generaterandomLogin = this.ff.generateRandomBooleanValue();
+			boolean generaterandomLogin = this.browser.generateRandomBooleanValue();
 			if (generaterandomLogin == true) {
 				return this.login();
 			}
@@ -92,15 +97,15 @@ public class SiteTester {
 		return false;
 	}
 	
-	public boolean skipPage(String page) {
+	private boolean skipPage(String page) {
 		if (page.isEmpty() || this.visitedPages.contains(page) || this.dontVisitPages.contains(page)) {
 			return true;
 		}
 		return false;
 	}
 	
-	public boolean pageAccessDeniedProcess(String page) {
-		boolean isAccessDenied = this.ff.isPageTitleContains(accessDeniedPageTitle);
+	private boolean pageAccessDeniedProcess(String page) {
+		boolean isAccessDenied = this.browser.isPageTitleContains(accessDeniedPageTitle);
 		if (isAccessDenied == true) {
 			this.reporter.accessDeniedAdd();
 			String parentPage = this.getParentPage(page);
@@ -110,8 +115,8 @@ public class SiteTester {
 		return isAccessDenied;
 	}
 
-	public boolean pageNotFoundProcess(String page) {
-		boolean ispageNotFound = this.ff.isPageTitleContains(this.pageNotFoundTitle);
+	private boolean pageNotFoundProcess(String page) {
+		boolean ispageNotFound = this.browser.isPageTitleContains(this.pageNotFoundTitle);
 		if (ispageNotFound == true) {
 			this.reporter.pageNotFoundAdd();
 			String parentPage = this.getParentPage(page);
@@ -120,12 +125,12 @@ public class SiteTester {
 		return ispageNotFound;
 	}
 
-	public boolean pageErrorsProcess(String page) {
-		boolean isErrorMessage = this.ff.isElemExist(".error");
+	private boolean pageErrorsProcess(String page) {
+		boolean isErrorMessage = this.browser.isElemExist(".error");
 		if (isErrorMessage) {
 			// Take screenshot of error page
 			String screenshotFileName = "Page";
-			this.ff.takeScreenshot(screenshotFileName);
+			this.browser.takeScreenshot(screenshotFileName);
 			reporter.ErrorAdd();
 			// Add Error message to log
 			String parentPage = this.getParentPage(page);
@@ -134,7 +139,7 @@ public class SiteTester {
 		return isErrorMessage;
 	}
 	
-	public String getParentPage(String page) {
+	private String getParentPage(String page) {
 		String childPagePath = null;
 		String parentPagePath = null;
 		for (Map.Entry<String, String> entry : this.parentagePagesPaths.entrySet()) { 
@@ -146,12 +151,13 @@ public class SiteTester {
 		return parentPagePath;
 	}
 	
-	@Test
-	public void siteTesterScan() {
+	public String siteTesterScan() {
 		this.loginProcess();
 		List<String> currentPageLinks = new ArrayList<String>();
 		String link = null;
 		String nextPage = null;
+		this.browser.getPage(this.getHost());
+    	this.browser.chageScreenSize(this.defaultBrowserDimension);
 		for (int i = 0; i < this.pagesToVisit.size(); i++) {
 			nextPage = this.pagesToVisit.get(i);
 			nextPage = this.filterQuery(this.getHost(), nextPage);
@@ -159,7 +165,7 @@ public class SiteTester {
 			if (this.skipPage(nextPage)) {
 				continue;
 			}			
-			this.ff.getPage(nextPage);
+			this.browser.getPage(nextPage);
 			if (this.resize) {
 				this.resize(nextPage);
 			}
@@ -173,7 +179,7 @@ public class SiteTester {
 			// Check there are no error messages on current page
 			pageErrorsProcess(nextPage);
 			if (this.collectLinks) {
-				currentPageLinks = this.ff.getCurrentPageLinks();
+				currentPageLinks = this.browser.getCurrentPageLinks();
 				//Mix list of current page links
 				Collections.shuffle(currentPageLinks);
 				// Add Pages paths
@@ -190,16 +196,17 @@ public class SiteTester {
 		}
 		this.reporter.reportConsole();
 		this.reporter.reportFile(this.reportName, this.filePath);
-		this.ff.closeBrowser();	
+		this.browser.closeBrowser();
+		return "Done";
 	}
 	
 	private void resize(String page) {
     	for (int i = 0; i < this.resolutions.size(); i++) {
     		Dimension res = this.resolutions.get(i);
-        	this.ff.chageScreenSize(res);
+        	this.browser.chageScreenSize(res);
         	if (this.takeScreenshots) {
         		page = page.replaceAll(this.host, "");
-        		this.ff.takeScreenshot("page-" + page + "-" + res.width + "-" + res.height);
+        		this.browser.takeScreenshot("page-" + page + "-" + res.width + "-" + res.height);
         	}
     	}
 	}
@@ -209,23 +216,22 @@ public class SiteTester {
 		boolean formErrorMessage = false;
 		try {
 			// Exclude login form and registration form.
-			List<WebElement> formsOnPage = new ArrayList<WebElement>();
-			formsOnPage.addAll(this.ff.getElems("form"));
+			List<WebElement> formsOnPage = this.browser.getElems("form");
 			for (int v = 0; v < formsOnPage.size(); v++) {
 				String idForm = formsOnPage.get(v).getAttribute("id");
 				String diezIdForm = ("#" + idForm);					
-				submitButton = this.ff.getElem(diezIdForm + " input[type='submit']"); 
+				submitButton = this.browser.getElem(diezIdForm + " input[type='submit']"); 
 				List<WebElement> submitButtons = new ArrayList<WebElement>();
 				if (this.dontFillForm.contains(idForm)) { 
 					continue;			
 				}
 				// Form infill
-				this.ff.fieldsetsOpen(diezIdForm);
-				this.ff.fillFormCheckboxes(diezIdForm);
-				this.ff.fillFormRadios(diezIdForm);	
-				this.ff.fillFormSelect(diezIdForm);		
-				this.ff.fillFormText(diezIdForm);
-				this.ff.fillFormNumber(diezIdForm);
+				drupal.fieldsetsOpen(diezIdForm);
+				drupal.fillFormCheckboxes(diezIdForm);
+				drupal.fillFormRadios(diezIdForm);
+				drupal.fillFormSelect(diezIdForm);		
+				drupal.fillFormText(diezIdForm);
+				drupal.fillFormNumber(diezIdForm);
 				if (submitButton != null) {
 					submitButtons.add(submitButton);				
 				}
@@ -242,19 +248,19 @@ public class SiteTester {
 						continue;							
 					}					
 				}
-				this.ff.waitWhile(".ajax-throbber");
-				this.ff.waitWhile(".filled");
-				formErrorMessage = this.ff.isElemExist(".error");
+				this.browser.waitWhile(".ajax-throbber");
+				this.browser.waitWhile(".filled");
+				formErrorMessage = this.browser.isElemExist(".error");
 				if (formErrorMessage) {
 					this.reporter.formErrorAdd();
 					// Take screen shot of error page
-					this.ff.takeScreenshot("form_id=" + diezIdForm);
+					this.browser.takeScreenshot("form_id=" + diezIdForm);
 					// Add Error message to log
 					this.reporter.addErrorMessage("Form Error! Page - " + page + ", id=" + diezIdForm + ", Screenshots - " + "c:\\screenshots\\" + "form_id=" + diezIdForm + ".png");
 				}
 			}
 		}
-		catch (StaleElementReferenceException error) {	
+		catch (StaleElementReferenceException error) {
 			
 		}
 		return true;

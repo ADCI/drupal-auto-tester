@@ -70,11 +70,11 @@ public class Reporter {
 
 	public void documentCreate(String name, String path, String value) {
 		try {
-			File flt = new File(path + "\\" + name + ".txt");
+			File flt = new File(path + "\\" + name);
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(flt)));
 			out.print(value);
 			out.flush();
-			System.out.println("Output is generated in a file " + name + ".txt");	
+			System.out.println("Output is generated in a file " + name);	
 			out.close();
 		}
 		catch (IOException error) {

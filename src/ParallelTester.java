@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
 
 
 public class ParallelTester {
-    int numThreads = 2;
+    int numThreads = 1;
     
 	public static final void main(String... aArgs) throws InterruptedException, ExecutionException {
 		ParallelTester tester = new ParallelTester();
