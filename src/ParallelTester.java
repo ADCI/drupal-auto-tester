@@ -12,16 +12,19 @@ import java.util.concurrent.Future;
 public class ParallelTester {
     int numThreads = 1;
     
-	public static final void main(String... aArgs) throws InterruptedException, ExecutionException {
+	public static final void main(String[] args) throws InterruptedException, ExecutionException {
+		System.out.println(args[0]);
+		System.out.println(args[1]);
+		String host = args[0];
 		ParallelTester tester = new ParallelTester();
-		tester.siteTesterParallelScan();
+		tester.siteTesterParallelScan(host);
 	}
 	
-	void siteTesterParallelScan()  throws InterruptedException, ExecutionException  {
+	void siteTesterParallelScan(String host)  throws InterruptedException, ExecutionException  {
 	    ExecutorService executor = Executors.newFixedThreadPool(this.numThreads);
 	    CompletionService<String> compService = new ExecutorCompletionService<>(executor);
 	    for (int i = 0; i < this.numThreads; i++) {
-	    	Task task = new Task();
+	    	Task task = new Task(host);
 	      	compService.submit(task);
 	    }
 	    for(int i = 0; i < this.numThreads; i++){
@@ -33,8 +36,14 @@ public class ParallelTester {
 	
 	private final class Task implements Callable<String> {
 
+		private String host;
+
+		public Task(String host) {
+			this.host = host;
+		}
+
 		@Override public String call() throws Exception {
-	    	SiteTester scanner = new SiteTester();
+	    	SiteTester scanner = new SiteTester(this.host);
 	    	return scanner.siteTesterScan();
 	    }
 	}

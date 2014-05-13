@@ -22,11 +22,11 @@ public class SiteTester {
 	final private String reportName = "report.log";
 	private String testUserLogin = "";
 	private String testUserPass = "";
-	final private String host = "http://10.1.0.124:81";
+	final private String host;
 	private String accessDeniedPageTitle = "Access denied";
 	private String pageNotFoundTitle = "Page not found";
 	private int needLogin = 0; // 0 - no login, 1 - login required, 2 - random login.
-	private boolean fillForms = true;
+	private boolean fillForms = false;
 	private boolean resize = true;
 	private boolean takeScreenshots = true;
 	private final int screenHeight = 700;
@@ -44,7 +44,8 @@ public class SiteTester {
 	Map<String, String> parentagePagesPaths = new HashMap<String, String>();
 	
 	// Class constructor.
-	SiteTester() {
+	SiteTester(String host) {
+		this.host = host;
 		this.browser = new BrowserDriver(this.filePath, this.browserType);
 		this.reporter = new Reporter();
 		this.drupal = new DrupalController(this.browser);
