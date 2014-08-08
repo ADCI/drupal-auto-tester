@@ -22,7 +22,7 @@ public class SiteTester {
     // final private String filePath = "C:/drupal-test/screenshots/" + weekDay;
     final private String filePath = "";
     final private String errorPageFilePath = "screenshots/" + weekDay + "/error";
-    final private String everyPageFilePath = "screenshots/" + weekDay + "/error";
+    final private String everyPageFilePath = "screenshots/" + weekDay + "/allPage";
     final private String testAddress = "http://clients.adciserver.com:8080/job/Autotester/ws";
     final private String reportName = "report.log";
     private final String testUserLogin;
@@ -184,7 +184,7 @@ public class SiteTester {
             System.out.println(nextPage);
             String fileName = "page-" + nextPage.replaceAll(this.host, "");
             browser.takeScreenshot(fileName, everyPageFilePath);
-            System.out.println(testAddress + "/" + everyPageFilePath + "/" + fileName);
+            System.out.println(testAddress + "/" + everyPageFilePath + "/" + fileName + ".png");
             // Add page to visited list
             this.visitedPages.add(nextPage);
             reporter.visitedPagesAdd();
