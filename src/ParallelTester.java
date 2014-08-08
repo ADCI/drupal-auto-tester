@@ -12,14 +12,10 @@ public class ParallelTester {
     int numThreads = 1;
 
     public static final void main(String[] args) throws InterruptedException, ExecutionException {
-        System.out.println("value 1 - " + args[0]);
-        System.out.println("value 2 - " + args[1]);
-        // System.out.println(args[0]);
-        // System.out.println(args[1]);
-        // String host = args[0];
-        String host = "http://127.0.0.1:4568";
+        String host = args[0];
         ParallelTester tester = new ParallelTester();
         tester.siteTesterParallelScan(host);
+        // tester.siteTesterParallelScan("http://127.0.0.1:4568");
     }
 
     void siteTesterParallelScan(String host) throws InterruptedException, ExecutionException {
