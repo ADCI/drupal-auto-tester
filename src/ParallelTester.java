@@ -12,12 +12,6 @@ public class ParallelTester {
     int numThreads = 1;
 
     public static final void main(String[] args) throws InterruptedException, ExecutionException {
-        System.out.println(args[0]);
-        System.out.println(args[1]);
-        System.out.println(args[2]);
-        System.out.println(args[3]);
-        System.out.println(args[4]);
-
         String host = args[0];
         String testUserLogin = args[1];
         String testUserPass = args[2];
@@ -29,10 +23,6 @@ public class ParallelTester {
 
         ParallelTester tester = new ParallelTester();
         tester.siteTesterParallelScan(host, testUserLogin, testUserPass, needLogin, fillForms);
-
-        // SiteTester tester = new SiteTester(host, testUserLogin, testUserPass,
-        // needLogin, fillForms);
-        // tester.siteTesterScan();
     }
 
     void siteTesterParallelScan(String host, String testUserLogin, String testUserPass, int needLogin, boolean fillForms) throws InterruptedException, ExecutionException {

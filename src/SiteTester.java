@@ -1,6 +1,7 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,10 @@ public class SiteTester {
     private final Reporter reporter;
     private final DrupalController drupal;
     private final int browserType = 1; // 1 - firefox, 2 - chrome.
-    final private String filePath = "C:/drupal-test";
+    final private int weekDay = java.util.Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+    // final private String filePath = "C:/drupal-test/screenshots/" + weekDay;
+    final private String filePath = "screenshots/" + weekDay;
+    final private String testAddress = "http://clients.adciserver.com:8080/job/Autotester/ws";
     final private String reportName = "report.log";
     private final String testUserLogin;
     private final String testUserPass;
@@ -175,6 +179,10 @@ public class SiteTester {
             if (this.resize) {
                 this.resize(nextPage);
             }
+            System.out.println(nextPage);
+            String fileName = "page-" + nextPage.replaceAll(this.host, "");
+            browser.takeScreenshot(fileName);
+            System.out.println(testAddress + "/" + filePath + "/" + fileName);
             // Add page to visited list
             this.visitedPages.add(nextPage);
             reporter.visitedPagesAdd();
