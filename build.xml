@@ -54,6 +54,8 @@
     <target name="ParallelTester">
         <java classname="src.ParallelTester" failonerror="true" fork="yes">
             <classpath refid="drupal-auto-tester.classpath"/>
+        	  <arg value="${arg0}"/>
+    	      <arg value="${arg1}"/>
         </java>
     </target>
     <target name="SiteTester">
