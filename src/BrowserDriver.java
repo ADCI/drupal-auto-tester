@@ -64,11 +64,11 @@ public class BrowserDriver {
         driver.get(this.getCurrentUrl());
     }
 
-    public void takeScreenshot(String filename) {
+    public void takeScreenshot(String filename, String filePath) {
         filename = this.filterScreenshotFileName(filename);
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(scrFile, new File(this.filePath + "\\" + filename + ".png"));
+            FileUtils.copyFile(scrFile, new File(filePath + "\\" + filename + ".png"));
         }
         catch (IOException e) {
             e.printStackTrace();

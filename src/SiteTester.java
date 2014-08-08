@@ -20,7 +20,9 @@ public class SiteTester {
     private final int browserType = 1; // 1 - firefox, 2 - chrome.
     final private int weekDay = java.util.Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
     // final private String filePath = "C:/drupal-test/screenshots/" + weekDay;
-    final private String filePath = "screenshots/" + weekDay;
+    final private String filePath = "";
+    final private String errorPageFilePath = "screenshots/" + weekDay + "/error";
+    final private String everyPageFilePath = "screenshots/" + weekDay + "/error";
     final private String testAddress = "http://clients.adciserver.com:8080/job/Autotester/ws";
     final private String reportName = "report.log";
     private final String testUserLogin;
@@ -140,7 +142,7 @@ public class SiteTester {
         if (isErrorMessage) {
             // Take screenshot of error page
             String screenshotFileName = "Page";
-            this.browser.takeScreenshot(screenshotFileName);
+            this.browser.takeScreenshot(screenshotFileName, errorPageFilePath);
             reporter.ErrorAdd();
             // Add Error message to log
             String parentPage = this.getParentPage(page);
@@ -181,8 +183,8 @@ public class SiteTester {
             }
             System.out.println(nextPage);
             String fileName = "page-" + nextPage.replaceAll(this.host, "");
-            browser.takeScreenshot(fileName);
-            System.out.println(testAddress + "/" + filePath + "/" + fileName);
+            browser.takeScreenshot(fileName, everyPageFilePath);
+            System.out.println(testAddress + "/" + everyPageFilePath + "/" + fileName);
             // Add page to visited list
             this.visitedPages.add(nextPage);
             reporter.visitedPagesAdd();
@@ -209,7 +211,7 @@ public class SiteTester {
             }
         }
         this.reporter.reportConsole();
-        this.reporter.reportFile(this.reportName, this.filePath);
+        this.reporter.reportFile(this.reportName, this.errorPageFilePath);
         this.browser.closeBrowser();
         return "Done";
     }
@@ -220,7 +222,7 @@ public class SiteTester {
             this.browser.chageScreenSize(res);
             if (this.takeScreenshots) {
                 page = page.replaceAll(this.host, "");
-                this.browser.takeScreenshot("page-" + page + "-" + res.width + "-" + res.height);
+                this.browser.takeScreenshot("page-" + page + "-" + res.width + "-" + res.height, errorPageFilePath);
             }
         }
     }
@@ -268,7 +270,7 @@ public class SiteTester {
                 if (formErrorMessage) {
                     this.reporter.formErrorAdd();
                     // Take screen shot of error page
-                    this.browser.takeScreenshot("form_id=" + diezIdForm);
+                    this.browser.takeScreenshot("form_id=" + diezIdForm, errorPageFilePath);
                     // Add Error message to log
                     this.reporter.addErrorMessage("Form Error! Page - " + page + ", id=" + diezIdForm + ", Screenshots - " + "c:\\screenshots\\" + "form_id=" + diezIdForm + ".png");
                 }
