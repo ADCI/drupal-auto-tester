@@ -56,6 +56,9 @@
             <classpath refid="drupal-auto-tester.classpath"/>
         	  <arg value="${arg0}"/>
     	      <arg value="${arg1}"/>
+          	<arg value="${arg2}"/>
+    	     	<arg value="${arg3}"/>
+          	<arg value="${arg4}"/>
         </java>
     </target>
     <target name="SiteTester">
