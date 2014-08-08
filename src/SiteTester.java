@@ -19,14 +19,14 @@ public class SiteTester {
     private final int browserType = 1; // 1 - firefox, 2 - chrome.
     final private String filePath = "C:/drupal-test";
     final private String reportName = "report.log";
-    private final String testUserLogin = "Java_test@agent.agent";
-    private final String testUserPass = "111";
+    private final String testUserLogin;
+    private final String testUserPass;
     final private String host;
     private final String accessDeniedPageTitle = "Access denied";
     private final String pageNotFoundTitle = "Page not found";
-    private final int needLogin = 1; // 0 - no login, 1 - login required, 2 -
-                                     // random login.
-    private final boolean fillForms = true;
+    private final int needLogin; // 0 - no login, 1 - login required, 2 -
+                                 // random login.
+    private final boolean fillForms;
     private final boolean resize = false;
     private final boolean takeScreenshots = false;
     private final int screenHeight = 700;
@@ -44,8 +44,13 @@ public class SiteTester {
     Map<String, String> parentagePagesPaths = new HashMap<String, String>();
 
     // Class constructor.
-    SiteTester(String host) {
+    SiteTester(String host, String testUserLogin, String testUserPass, int needLogin, boolean fillForms) {
         this.host = host;
+        this.testUserLogin = testUserLogin;
+        this.testUserPass = testUserPass;
+        this.needLogin = needLogin;
+        this.fillForms = fillForms;
+
         this.browser = new BrowserDriver(this.filePath, this.browserType);
         this.reporter = new Reporter();
         this.drupal = new DrupalController(this.browser);
