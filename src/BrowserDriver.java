@@ -64,15 +64,16 @@ public class BrowserDriver {
         driver.get(this.getCurrentUrl());
     }
 
-    public void takeScreenshot(String filename, String filePath) {
+    public void takeScreenshot(String filename, String path) {
         filename = this.filterScreenshotFileName(filename);
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(scrFile, new File(filePath + "\\" + filename + ".png"));
+            // FileUtils.copyFile(scrFile, new File(this.filePath + "\\" +
+            // filename + ".png"));
+            FileUtils.copyFile(scrFile, new File(path + filename + ".png"));
         }
-        catch (IOException e) {
-            System.out.println("Unable to make a screenshot");
-            e.printStackTrace();
+        catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
