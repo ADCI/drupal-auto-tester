@@ -44,6 +44,7 @@ public class ParallelTester {
         }
         catch (ArrayIndexOutOfBoundsException error) {
         }
+        System.out.println(collectorName);
 
         ParallelTester tester = new ParallelTester();
         tester.siteTesterParallelScan(host, collectorName, testUserLogin, testUserPass, needLogin, fillForms);
