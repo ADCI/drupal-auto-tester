@@ -25,7 +25,7 @@ public class ParallelTester {
             String needLoginArgs = args[4];
             String fillFormAgrs = args[5];
 
-            if (collectorNameArgs.equals("null")) {
+            if (!collectorNameArgs.equals("null")) {
                 collectorName = collectorNameArgs;
             }
             if (!userLoginAgrs.equals("null")) {
