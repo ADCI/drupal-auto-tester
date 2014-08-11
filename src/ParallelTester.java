@@ -13,13 +13,39 @@ public class ParallelTester {
 
     public static final void main(String[] args) throws InterruptedException, ExecutionException {
         String host = args[0];
-        String testUserLogin = args[1];
-        String testUserPass = args[2];
-        int needLogin = Integer.parseInt(args[3].toString());
-        boolean fillForms = false;
-        if (args[4].equals("true")) {
-            fillForms = true;
+        String testUserLogin = "";
+        try {
+            testUserLogin = args[1];
         }
+        catch (ArrayIndexOutOfBoundsException error) {
+        }
+        System.out.println(testUserLogin);
+
+        String testUserPass = "";
+        try {
+            testUserPass = args[2];
+        }
+        catch (ArrayIndexOutOfBoundsException error) {
+        }
+        System.out.println(testUserPass);
+
+        int needLogin = 0;
+        try {
+            needLogin = Integer.parseInt(args[3].toString());
+        }
+        catch (ArrayIndexOutOfBoundsException error) {
+        }
+        System.out.println(needLogin);
+
+        boolean fillForms = false;
+        try {
+            if (args[4].equals("true")) {
+                fillForms = true;
+            }
+        }
+        catch (ArrayIndexOutOfBoundsException error) {
+        }
+        System.out.println(fillForms);
 
         ParallelTester tester = new ParallelTester();
         tester.siteTesterParallelScan(host, testUserLogin, testUserPass, needLogin, fillForms);
