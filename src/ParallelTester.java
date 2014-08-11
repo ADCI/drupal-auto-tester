@@ -17,17 +17,27 @@ public class ParallelTester {
         String testUserPass = "";
         int needLogin = 0;
         boolean fillForms = false;
+        String collectorName = "";
         try {
-            if (!args[1].equals("null")) {
-                testUserLogin = args[1];
+            String collectorNameArgs = args[1];
+            String userLoginAgrs = args[2];
+            String userPassArgs = args[3];
+            String needLoginArgs = args[4];
+            String fillFormAgrs = args[5];
+
+            if (collectorNameArgs.equals("null")) {
+                collectorName = collectorNameArgs;
             }
-            if (!args[2].equals("null")) {
-                testUserPass = args[2];
+            if (!userLoginAgrs.equals("null")) {
+                testUserLogin = userLoginAgrs;
             }
-            if (!args[3].equals("null")) {
-                needLogin = Integer.parseInt(args[3].toString());
+            if (!userPassArgs.equals("null")) {
+                testUserPass = userPassArgs;
             }
-            if (args[4].equals("true")) {
+            if (!needLoginArgs.equals("null")) {
+                needLogin = Integer.parseInt(needLoginArgs.toString());
+            }
+            if (fillFormAgrs.equals("true")) {
                 fillForms = true;
             }
         }
@@ -35,14 +45,14 @@ public class ParallelTester {
         }
 
         ParallelTester tester = new ParallelTester();
-        tester.siteTesterParallelScan(host, testUserLogin, testUserPass, needLogin, fillForms);
+        tester.siteTesterParallelScan(host, collectorName, testUserLogin, testUserPass, needLogin, fillForms);
     }
 
-    void siteTesterParallelScan(String host, String testUserLogin, String testUserPass, int needLogin, boolean fillForms) throws InterruptedException, ExecutionException {
+    void siteTesterParallelScan(String host, String collectorName, String testUserLogin, String testUserPass, int needLogin, boolean fillForms) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newFixedThreadPool(this.numThreads);
         CompletionService<String> compService = new ExecutorCompletionService<>(executor);
         for (int i = 0; i < this.numThreads; i++) {
-            Task task = new Task(host, testUserLogin, testUserPass, needLogin, fillForms);
+            Task task = new Task(host, collectorName, testUserLogin, testUserPass, needLogin, fillForms);
             compService.submit(task);
         }
         for (int i = 0; i < this.numThreads; i++) {
@@ -55,13 +65,15 @@ public class ParallelTester {
     private final class Task implements Callable<String> {
 
         private final String host;
+        private final String collectorName;
         private final String testUserLogin;
         private final String testUserPass;
         private final int needLogin;
         private final boolean fillForms;
 
-        public Task(String host, String testUserLogin, String testUserPass, int needLogin, boolean fillForms) {
+        public Task(String host, String collectorName, String testUserLogin, String testUserPass, int needLogin, boolean fillForms) {
             this.host = host;
+            this.collectorName = collectorName;
             this.testUserLogin = testUserLogin;
             this.testUserPass = testUserPass;
             this.needLogin = needLogin;
@@ -70,7 +82,7 @@ public class ParallelTester {
 
         @Override
         public String call() throws Exception {
-            SiteTester scanner = new SiteTester(this.host, this.testUserLogin, this.testUserPass, this.needLogin, this.fillForms);
+            SiteTester scanner = new SiteTester(this.host, this.collectorName, this.testUserLogin, this.testUserPass, this.needLogin, this.fillForms);
             return scanner.siteTesterScan();
         }
     }

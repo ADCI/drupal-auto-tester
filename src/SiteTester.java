@@ -25,11 +25,12 @@ public class SiteTester {
     // final private String everyPageFilePath = "screenshots/" + weekDay +
     // "/allPage";
     final private String everyPageFilePath = "screenshots//" + weekDay + "//allPage//";
-    final private String testAddress = "http://clients.adciserver.com:8080/job/Autotester/ws";
     final private String reportName = "report.log";
     private final String testUserLogin;
     private final String testUserPass;
     final private String host;
+    String collectorName;
+    private final String testAddress = "http://clients.adciserver.com:8080/job/" + collectorName + "/ws";
     private final String accessDeniedPageTitle = "Access denied";
     private final String pageNotFoundTitle = "Page not found";
     private final int needLogin; // 0 - no login, 1 - login required, 2 -
@@ -52,8 +53,9 @@ public class SiteTester {
     Map<String, String> parentagePagesPaths = new HashMap<String, String>();
 
     // Class constructor.
-    SiteTester(String host, String testUserLogin, String testUserPass, int needLogin, boolean fillForms) {
+    SiteTester(String host, String collectorName, String testUserLogin, String testUserPass, int needLogin, boolean fillForms) {
         this.host = host;
+        this.collectorName = collectorName;
         this.testUserLogin = testUserLogin;
         this.testUserPass = testUserPass;
         this.needLogin = needLogin;
@@ -188,7 +190,6 @@ public class SiteTester {
             String screenshotName = nodeNumber + "";
             browser.takeScreenshot(screenshotName, everyPageFilePath);
             System.out.println(testAddress + "/" + everyPageFilePath + screenshotName + ".png");
-            nodeNumber++;
             // Add page to visited list
             this.visitedPages.add(nextPage);
             reporter.visitedPagesAdd();
