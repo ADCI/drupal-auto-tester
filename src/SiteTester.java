@@ -21,10 +21,10 @@ public class SiteTester {
     final private int weekDay = java.util.Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
     // final private String filePath = "C:/drupal-test/screenshots/" + weekDay;
     final private String filePath = "";
-    final private String errorPageFilePath = "screenshots//" + weekDay + "//error";
+    final private String errorPageFilePath = "screenshots/" + weekDay + "/error";
     // final private String everyPageFilePath = "screenshots/" + weekDay +
     // "/allPage";
-    final private String everyPageFilePath = "screenshots//" + weekDay + "//allPage";
+    final private String everyPageFilePath = "screenshots/" + weekDay + "/allPage";
     final private String testAddress = "http://clients.adciserver.com:8080/job/Autotester/ws";
     final private String reportName = "report.log";
     private final String testUserLogin;
@@ -148,7 +148,7 @@ public class SiteTester {
             reporter.ErrorAdd();
             // Add Error message to log
             String parentPage = this.getParentPage(page);
-            this.reporter.addErrorMessage("Error! " + "Path: " + "Parent page - " + parentPage + ", Error page - " + page + ", Screenshots - " + "c:\\screenshots\\" + screenshotFileName + ".png");
+            this.reporter.addErrorMessage("Error! " + "Path: " + "Parent page - " + parentPage + ", Error page - " + page + ", Screenshots - " + testAddress + errorPageFilePath + screenshotFileName + ".png");
         }
         return isErrorMessage;
     }
