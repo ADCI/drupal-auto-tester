@@ -71,6 +71,7 @@ public class BrowserDriver {
             FileUtils.copyFile(scrFile, new File(filePath + "\\" + filename + ".png"));
         }
         catch (IOException e) {
+            System.out.println("Unable to make a screenshot");
             e.printStackTrace();
         }
     }
