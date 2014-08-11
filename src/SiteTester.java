@@ -29,8 +29,9 @@ public class SiteTester {
     private final String testUserLogin;
     private final String testUserPass;
     final private String host;
-    String collectorName;
-    private final String testAddress = "http://clients.adciserver.com:8080/job/" + collectorName + "/ws";
+    private final String collectorName;
+    // public String testAddress = "http://clients.adciserver.com:8080/job/" +
+    // collectorName + "/ws";
     private final String accessDeniedPageTitle = "Access denied";
     private final String pageNotFoundTitle = "Page not found";
     private final int needLogin; // 0 - no login, 1 - login required, 2 -
@@ -142,6 +143,7 @@ public class SiteTester {
     }
 
     private boolean pageErrorsProcess(String page, String screenshotName) {
+        String testAddress = "http://clients.adciserver.com:8080/job/" + collectorName + "/ws";
         boolean isErrorMessage = this.browser.isElemExist(".error");
         if (isErrorMessage) {
             // Take screenshot of error page
@@ -173,6 +175,7 @@ public class SiteTester {
         String link = null;
         String nextPage = null;
         int nodeNumber = 1;
+        String testAddress = "http://clients.adciserver.com:8080/job/" + collectorName + "/ws";
         this.browser.getPage(this.getHost());
         this.browser.chageScreenSize(this.defaultBrowserDimension);
         for (int i = 0; i < this.pagesToVisit.size(); i++) {
@@ -236,6 +239,7 @@ public class SiteTester {
     private boolean fillForm(String page) {
         WebElement submitButton = null;
         boolean formErrorMessage = false;
+        String testAddress = "http://clients.adciserver.com:8080/job/" + collectorName + "/ws";
         try {
             // Exclude login form and registration form.
             List<WebElement> formsOnPage = this.browser.getElems("form");
