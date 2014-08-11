@@ -170,6 +170,7 @@ public class SiteTester {
         List<String> currentPageLinks = new ArrayList<String>();
         String link = null;
         String nextPage = null;
+        int nodeNumber = 0;
         this.browser.getPage(this.getHost());
         this.browser.chageScreenSize(this.defaultBrowserDimension);
         for (int i = 0; i < this.pagesToVisit.size(); i++) {
@@ -184,9 +185,10 @@ public class SiteTester {
                 this.resize(nextPage);
             }
             System.out.println(nextPage);
-            String fileName = "page-" + nextPage.replaceAll(this.host, "");
-            browser.takeScreenshot(fileName, everyPageFilePath);
-            System.out.println(testAddress + "/" + everyPageFilePath + "/" + fileName + ".png");
+            String screenshotName = nodeNumber + "";
+            browser.takeScreenshot(screenshotName, everyPageFilePath);
+            System.out.println(testAddress + "/" + everyPageFilePath + "/" + screenshotName + ".png");
+            nodeNumber++;
             // Add page to visited list
             this.visitedPages.add(nextPage);
             reporter.visitedPagesAdd();
