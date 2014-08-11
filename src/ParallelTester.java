@@ -12,22 +12,23 @@ public class ParallelTester {
     int numThreads = 1;
 
     public static final void main(String[] args) throws InterruptedException, ExecutionException {
-        String host = args[0];
         String testUserLogin = "";
         String testUserPass = "";
         int needLogin = 0;
         boolean fillForms = false;
-        String collectorName = "";
+        // String collectorName = "";
+        String host = args[0];
+        String collectorName = args[1];
         try {
-            String collectorNameArgs = args[1];
+            // String collectorNameArgs = args[1];
             String userLoginAgrs = args[2];
             String userPassArgs = args[3];
             String needLoginArgs = args[4];
             String fillFormAgrs = args[5];
 
-            if (!collectorNameArgs.equals("null")) {
-                collectorName = collectorNameArgs;
-            }
+            // if (!collectorNameArgs.equals("null")) {
+            // collectorName = collectorNameArgs;
+            // }
             if (!userLoginAgrs.equals("null")) {
                 testUserLogin = userLoginAgrs;
             }
