@@ -139,11 +139,11 @@ public class SiteTester {
         return ispageNotFound;
     }
 
-    private boolean pageErrorsProcess(String page) {
+    private boolean pageErrorsProcess(String page, String screenshotName) {
         boolean isErrorMessage = this.browser.isElemExist(".error");
         if (isErrorMessage) {
             // Take screenshot of error page
-            String screenshotFileName = "Page";
+            String screenshotFileName = "errorPage-" + screenshotName;
             this.browser.takeScreenshot(screenshotFileName, errorPageFilePath);
             reporter.ErrorAdd();
             // Add Error message to log
@@ -170,7 +170,7 @@ public class SiteTester {
         List<String> currentPageLinks = new ArrayList<String>();
         String link = null;
         String nextPage = null;
-        int nodeNumber = 0;
+        int nodeNumber = 1;
         this.browser.getPage(this.getHost());
         this.browser.chageScreenSize(this.defaultBrowserDimension);
         for (int i = 0; i < this.pagesToVisit.size(); i++) {
@@ -187,7 +187,7 @@ public class SiteTester {
             System.out.println(nextPage);
             String screenshotName = nodeNumber + "";
             browser.takeScreenshot(screenshotName, everyPageFilePath);
-            System.out.println(testAddress + "/" + everyPageFilePath + "/" + screenshotName + ".png");
+            System.out.println(testAddress + "/" + everyPageFilePath + screenshotName + ".png");
             nodeNumber++;
             // Add page to visited list
             this.visitedPages.add(nextPage);
@@ -197,7 +197,8 @@ public class SiteTester {
             // Take page path of Page not found
             pageNotFoundProcess(nextPage);
             // Check there are no error messages on current page
-            pageErrorsProcess(nextPage);
+            pageErrorsProcess(nextPage, screenshotName);
+            nodeNumber++;
             if (this.collectLinks) {
                 currentPageLinks = this.browser.getCurrentPageLinks();
                 // Mix list of current page links
@@ -240,6 +241,7 @@ public class SiteTester {
             for (int v = 0; v < formsOnPage.size(); v++) {
                 String idForm = formsOnPage.get(v).getAttribute("id");
                 String diezIdForm = ("#" + idForm);
+                String screenshotName = "form_id=" + diezIdForm;
                 submitButton = this.browser.getElem(diezIdForm + " input[type='submit']");
                 List<WebElement> submitButtons = new ArrayList<WebElement>();
                 if (this.dontFillForm.contains(idForm)) {
@@ -276,12 +278,11 @@ public class SiteTester {
                     // Take screen shot of error page
                     this.browser.takeScreenshot("form_id=" + diezIdForm, errorPageFilePath);
                     // Add Error message to log
-                    this.reporter.addErrorMessage("Form Error! Page - " + page + ", id=" + diezIdForm + ", Screenshots - " + "c:\\screenshots\\" + "form_id=" + diezIdForm + ".png");
+                    this.reporter.addErrorMessage("Form Error! Page - " + page + ", " + screenshotName + ", Screenshots - " + testAddress + errorPageFilePath + screenshotName + ".png");
                 }
             }
         }
         catch (StaleElementReferenceException error) {
-
         }
         return true;
     }
