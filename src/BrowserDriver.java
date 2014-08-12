@@ -235,25 +235,14 @@ public class BrowserDriver {
         return rand.nextBoolean();
     }
 
-    // public void getFile(Path path, Charset cs) {
-    // File file = Files.readAllLines(path, cs);
-    // }
-
-    // public void delete(File file) {
-    // if (!file.exists()) return;
-    // if (file.isDirectory()) {
-    // for (File f : file.listFiles())
-    // delete(f);
-    // file.delete();
-    // }
-    // else {
-    // file.delete();
-    // }
-    // }
-
-    // public void filesDelete(String path) {
-    // for (File file : new File(path).listFiles())
-    // if (file.isFile()) file.delete();
-    // }
+    public void filesDelete(String path) {
+        try {
+            for (File file : new File(path).listFiles())
+                if (file.isFile()) file.delete();
+        }
+        catch (NullPointerException error) {
+            System.out.println(path + " folder is not found");
+        }
+    }
 
 }

@@ -178,6 +178,7 @@ public class SiteTester {
         String testAddress = "http://clients.adciserver.com:8080/job/" + collectorName + "/ws";
         this.browser.getPage(this.getHost());
         this.browser.chageScreenSize(this.defaultBrowserDimension);
+        this.screenshotsDelete();
         for (int i = 0; i < this.pagesToVisit.size(); i++) {
             nextPage = this.pagesToVisit.get(i);
             nextPage = this.filterQuery(this.getHost(), nextPage);
@@ -314,6 +315,11 @@ public class SiteTester {
             query = "";
         }
         return query;
+    }
+
+    private void screenshotsDelete() {
+        browser.filesDelete("screenshots//" + weekDay + "//allPage");
+        browser.filesDelete("screenshots//" + weekDay + "//error");
     }
 
 }
