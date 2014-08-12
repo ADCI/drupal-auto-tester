@@ -252,7 +252,7 @@ public class SiteTester {
             for (int v = 0; v < formsOnPage.size(); v++) {
                 String idForm = formsOnPage.get(v).getAttribute("id");
                 String diezIdForm = ("#" + idForm);
-                String screenshotName = "form_id=" + diezIdForm;
+                String screenshotName = "form_id=" + idForm;
                 submitButton = this.browser.getElem(diezIdForm + " input[type='submit']");
                 List<WebElement> submitButtons = new ArrayList<WebElement>();
                 if (this.dontFillForm.contains(idForm)) {
@@ -287,7 +287,7 @@ public class SiteTester {
                 if (formErrorMessage) {
                     this.reporter.formErrorAdd();
                     // Take screen shot of error page
-                    this.browser.takeScreenshot("form_id=" + diezIdForm, errorPageFilePath);
+                    this.browser.takeScreenshot(screenshotName, errorPageFilePath);
                     // Add Error message to log
                     this.reporter.addErrorMessage("Form Error! Page - " + page + ", " + screenshotName + ", Screenshots - " + testAddress + errorPageFilePath + screenshotName + ".png");
                 }
