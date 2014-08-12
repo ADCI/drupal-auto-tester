@@ -289,7 +289,7 @@ public class SiteTester {
                     // Take screen shot of error page
                     this.browser.takeScreenshot(screenshotName, errorPageFilePath);
                     // Add Error message to log
-                    this.reporter.addErrorMessage("Form Error! Page - " + page + ", " + screenshotName + ", Screenshots - " + testAddress + errorPageFilePath + screenshotName + ".png");
+                    this.reporter.addErrorMessage("Form Error! Page - " + page + ", " + screenshotName + ", Screenshots - " + testAddress + "/" + errorPageFilePath + screenshotName + ".png");
                 }
             }
         }

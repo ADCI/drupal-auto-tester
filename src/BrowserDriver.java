@@ -24,7 +24,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+
 import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import com.opera.core.systems.OperaDriver;
 
@@ -231,8 +235,8 @@ public class BrowserDriver {
         return rand.nextBoolean();
     }
 
-    // public void getFile() {
-    // File file = File("");
+    // public void getFile(Path path, Charset cs) {
+    // File file = Files.readAllLines(path, cs);
     // }
 
     // public void delete(File file) {
@@ -245,6 +249,11 @@ public class BrowserDriver {
     // else {
     // file.delete();
     // }
+    // }
+
+    // public void filesDelete(String path) {
+    // for (File file : new File(path).listFiles())
+    // if (file.isFile()) file.delete();
     // }
 
 }
