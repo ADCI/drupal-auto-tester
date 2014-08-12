@@ -152,7 +152,7 @@ public class SiteTester {
             reporter.ErrorAdd();
             // Add Error message to log
             String parentPage = this.getParentPage(page);
-            this.reporter.addErrorMessage("Error! " + "Path: " + "Parent page - " + parentPage + ", Error page - " + page + ", Screenshots - " + testAddress + errorPageFilePath + screenshotFileName + ".png");
+            this.reporter.addErrorMessage("Error! " + "Path: " + "Parent page - " + parentPage + ", Error page - " + page + ", Screenshots - " + testAddress + "/" + errorPageFilePath + screenshotFileName + ".png");
         }
         return isErrorMessage;
     }
@@ -221,6 +221,7 @@ public class SiteTester {
         }
         this.reporter.reportConsole();
         this.reporter.reportFile(this.reportName, this.errorPageFilePath);
+        System.out.println("Report file - " + testAddress + "/" + errorPageFilePath + "report.log");
         this.browser.closeBrowser();
         return "Done";
     }

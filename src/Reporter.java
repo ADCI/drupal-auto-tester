@@ -70,7 +70,7 @@ public class Reporter {
 
     public void documentCreate(String name, String path, String value) {
         try {
-            File flt = new File(path + "\\" + name);
+            File flt = new File(path + name);
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(flt)));
             out.print(value);
             out.flush();
