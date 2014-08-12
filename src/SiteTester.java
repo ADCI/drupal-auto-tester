@@ -185,43 +185,48 @@ public class SiteTester {
             if (this.skipPage(nextPage)) {
                 continue;
             }
-            this.browser.getPage(nextPage);
-            if (this.resize) {
-                this.resize(nextPage);
-            }
-            System.out.println(nextPage);
-            String screenshotName = nodeNumber + "";
-            browser.takeScreenshot(screenshotName, everyPageFilePath);
-            System.out.println(testAddress + "/" + everyPageFilePath + screenshotName + ".png");
-            // Add page to visited list
-            this.visitedPages.add(nextPage);
-            reporter.visitedPagesAdd();
-            // Take page path of Access denied page
-            pageAccessDeniedProcess(nextPage);
-            // Take page path of Page not found
-            pageNotFoundProcess(nextPage);
-            // Check there are no error messages on current page
-            pageErrorsProcess(nextPage, screenshotName);
-            nodeNumber++;
-            if (this.collectLinks) {
-                currentPageLinks = this.browser.getCurrentPageLinks();
-                // Mix list of current page links
-                Collections.shuffle(currentPageLinks);
-                // Add Pages paths
-                for (int j = 0; j < currentPageLinks.size(); j++) {
-                    link = this.filterQuery(this.getHost(), currentPageLinks.get(j));
-                    parentagePagesPaths.put(link, nextPage);
-                    this.pagesToVisit.add(link);
+            try {
+                this.browser.getPage(nextPage);
+                if (this.resize) {
+                    this.resize(nextPage);
+                }
+                System.out.println(nextPage);
+                String screenshotName = nodeNumber + "";
+                browser.takeScreenshot(screenshotName, everyPageFilePath);
+                System.out.println(testAddress + "/" + everyPageFilePath + screenshotName + ".png");
+                // Add page to visited list
+                this.visitedPages.add(nextPage);
+                reporter.visitedPagesAdd();
+                // Take page path of Access denied page
+                pageAccessDeniedProcess(nextPage);
+                // Take page path of Page not found
+                pageNotFoundProcess(nextPage);
+                // Check there are no error messages on current page
+                pageErrorsProcess(nextPage, screenshotName);
+                nodeNumber++;
+                if (this.collectLinks) {
+                    currentPageLinks = this.browser.getCurrentPageLinks();
+                    // Mix list of current page links
+                    Collections.shuffle(currentPageLinks);
+                    // Add Pages paths
+                    for (int j = 0; j < currentPageLinks.size(); j++) {
+                        link = this.filterQuery(this.getHost(), currentPageLinks.get(j));
+                        parentagePagesPaths.put(link, nextPage);
+                        this.pagesToVisit.add(link);
+                    }
+                }
+                // Fill in any form on the current page
+                if (fillForms == true) {
+                    this.fillForm(nextPage);
                 }
             }
-            // Fill in any form on the current page
-            if (fillForms == true) {
-                this.fillForm(nextPage);
+            catch (Exception exception) {
+
             }
         }
         this.reporter.reportConsole();
-        this.reporter.reportFile(this.reportName, this.errorPageFilePath);
         System.out.println("Report file - " + testAddress + "/" + errorPageFilePath + "report.log");
+        this.reporter.reportFile(this.reportName, this.errorPageFilePath);
         this.browser.closeBrowser();
         return "Done";
     }
