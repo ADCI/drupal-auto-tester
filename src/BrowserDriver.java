@@ -24,6 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import java.io.File;
 
 import com.opera.core.systems.OperaDriver;
 
@@ -229,5 +230,21 @@ public class BrowserDriver {
         Random rand = new Random();
         return rand.nextBoolean();
     }
+
+    // public void getFile() {
+    // File file = File("");
+    // }
+
+    // public void delete(File file) {
+    // if (!file.exists()) return;
+    // if (file.isDirectory()) {
+    // for (File f : file.listFiles())
+    // delete(f);
+    // file.delete();
+    // }
+    // else {
+    // file.delete();
+    // }
+    // }
 
 }
