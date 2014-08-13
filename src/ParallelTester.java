@@ -53,14 +53,6 @@ public class ParallelTester {
         }
         catch (ArrayIndexOutOfBoundsException error) {
         }
-        System.out.println(host);
-        System.out.println(builderName);
-        System.out.println(pageNotFoundTitle);
-        System.out.println(accessDeniedPageTitle);
-        System.out.println(needLogin);
-        System.out.println(testUserLogin);
-        System.out.println(testUserPass);
-        System.out.println(fillForms);
 
         ParallelTester tester = new ParallelTester();
         tester.siteTesterParallelScan(host, builderName, pageNotFoundTitle, accessDeniedPageTitle, needLogin, testUserLogin, testUserPass, fillForms);
