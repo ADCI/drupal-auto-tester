@@ -27,21 +27,25 @@ public class ParallelTester {
             String userLoginAgrs = args[5];
             String userPassArgs = args[6];
             String fillFormAgrs = args[7];
-            if (!pageNotFoundTitleArgs.equals("null")) {
-                pageNotFoundTitle = pageNotFoundTitleArgs;
-            }
-            if (!accessDeniedPageTitleArgs.equals("null")) {
-                accessDeniedPageTitle = accessDeniedPageTitleArgs;
-            }
-            if (!needLoginArgs.equals("null")) {
+            // if (!pageNotFoundTitleArgs.equals("null")) {
+            pageNotFoundTitle = pageNotFoundTitleArgs;
+            // }
+            // if (!accessDeniedPageTitleArgs.equals("null")) {
+            accessDeniedPageTitle = accessDeniedPageTitleArgs;
+            // }
+            // if (!needLoginArgs.equals("null")) {
+            try {
                 needLogin = Integer.parseInt(needLoginArgs.toString());
             }
-            if (!userLoginAgrs.equals("null")) {
-                testUserLogin = userLoginAgrs;
+            catch (NumberFormatException error) {
             }
-            if (!userPassArgs.equals("null")) {
-                testUserPass = userPassArgs;
-            }
+            // }
+            // if (!userLoginAgrs.equals("null")) {
+            testUserLogin = userLoginAgrs;
+            // }
+            // if (!userPassArgs.equals("null")) {
+            testUserPass = userPassArgs;
+            // }
             if (fillFormAgrs.equals("true")) {
                 fillForms = true;
             }
