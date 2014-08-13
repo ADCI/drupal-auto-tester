@@ -22,37 +22,52 @@ public class ParallelTester {
         boolean fillForms = false;
         try {
             String pageNotFoundTitleArgs = args[2];
-            String accessDeniedPageTitleArgs = args[3];
-            String needLoginArgs = args[4];
-            String userLoginAgrs = args[5];
-            String userPassArgs = args[6];
-            String fillFormAgrs = args[7];
+            pageNotFoundTitle = pageNotFoundTitleArgs;
+        }
+        catch (ArrayIndexOutOfBoundsException error) {
+        }
 
-            if (!pageNotFoundTitleArgs.equals("null")) {
-                pageNotFoundTitle = pageNotFoundTitleArgs;
+        try {
+            String accessDeniedPageTitleArgs = args[3];
+            accessDeniedPageTitle = accessDeniedPageTitleArgs;
+        }
+        catch (ArrayIndexOutOfBoundsException error) {
+        }
+
+        try {
+            String needLoginArgs = args[4];
+            try {
+                needLogin = Integer.parseInt(needLoginArgs.toString());
             }
-            if (!accessDeniedPageTitleArgs.equals("null")) {
-                accessDeniedPageTitle = accessDeniedPageTitleArgs;
+            catch (NumberFormatException error) {
             }
-            if (!needLoginArgs.equals("null")) {
-                try {
-                    needLogin = Integer.parseInt(needLoginArgs.toString());
-                }
-                catch (NumberFormatException error) {
-                }
-            }
-            if (!userLoginAgrs.equals("null")) {
-                testUserLogin = userLoginAgrs;
-            }
-            if (!userPassArgs.equals("null")) {
-                testUserPass = userPassArgs;
-            }
+        }
+        catch (ArrayIndexOutOfBoundsException error) {
+        }
+
+        try {
+            String userLoginAgrs = args[5];
+            testUserLogin = userLoginAgrs;
+        }
+        catch (ArrayIndexOutOfBoundsException error) {
+        }
+
+        try {
+            String userPassArgs = args[6];
+            testUserPass = userPassArgs;
+        }
+        catch (ArrayIndexOutOfBoundsException error) {
+        }
+
+        try {
+            String fillFormAgrs = args[7];
             if (fillFormAgrs.equals("true")) {
                 fillForms = true;
             }
         }
         catch (ArrayIndexOutOfBoundsException error) {
         }
+
         System.out.println(host);
         System.out.println(builderName);
         System.out.println(pageNotFoundTitle);
