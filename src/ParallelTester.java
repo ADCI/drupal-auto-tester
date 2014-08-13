@@ -27,24 +27,24 @@ public class ParallelTester {
             String userLoginAgrs = args[5];
             String userPassArgs = args[6];
             String fillFormAgrs = args[7];
-            if (!pageNotFoundTitleArgs.equals("null")) {
-                pageNotFoundTitle = pageNotFoundTitleArgs;
-            }
-            if (!accessDeniedPageTitleArgs.equals("null")) {
-                accessDeniedPageTitle = accessDeniedPageTitleArgs;
-            }
-            if (!needLoginArgs.equals("null")) {
-                needLogin = Integer.parseInt(needLoginArgs.toString());
-            }
-            if (!userLoginAgrs.equals("null")) {
-                testUserLogin = userLoginAgrs;
-            }
-            if (!userPassArgs.equals("null")) {
-                testUserPass = userPassArgs;
-            }
-            if (fillFormAgrs.equals("true")) {
-                fillForms = true;
-            }
+            // if (!pageNotFoundTitleArgs.equals("null")) {
+            pageNotFoundTitle = pageNotFoundTitleArgs;
+            // }
+            // if (!accessDeniedPageTitleArgs.equals("null")) {
+            accessDeniedPageTitle = accessDeniedPageTitleArgs;
+            // }
+            // if (!needLoginArgs.equals("null")) {
+            needLogin = Integer.parseInt(needLoginArgs.toString());
+            // }
+            // if (!userLoginAgrs.equals("null")) {
+            testUserLogin = userLoginAgrs;
+            // }
+            // if (!userPassArgs.equals("null")) {
+            testUserPass = userPassArgs;
+            // }
+            // if (fillFormAgrs.equals("true")) {
+            fillForms = true;
+            // }
         }
         catch (ArrayIndexOutOfBoundsException error) {
         }
