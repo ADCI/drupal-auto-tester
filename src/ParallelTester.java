@@ -28,27 +28,30 @@ public class ParallelTester {
             String userPassArgs = args[6];
             String fillFormAgrs = args[7];
 
-            pageNotFoundTitle = pageNotFoundTitleArgs;
-
-            accessDeniedPageTitle = accessDeniedPageTitleArgs;
-
-            try {
-                needLogin = Integer.parseInt(needLoginArgs.toString());
+            if (!pageNotFoundTitleArgs.equals("null")) {
+                pageNotFoundTitle = pageNotFoundTitleArgs;
             }
-            catch (NumberFormatException error) {
+            if (!accessDeniedPageTitleArgs.equals("null")) {
+                accessDeniedPageTitle = accessDeniedPageTitleArgs;
             }
-
-            testUserLogin = userLoginAgrs;
-
-            testUserPass = userPassArgs;
+            if (!needLoginArgs.equals("null")) {
+                try {
+                    needLogin = Integer.parseInt(needLoginArgs.toString());
+                }
+                catch (NumberFormatException error) {
+                }
+            }
+            if (!userLoginAgrs.equals("null")) {
+                testUserLogin = userLoginAgrs;
+            }
+            if (!userPassArgs.equals("null")) {
+                testUserPass = userPassArgs;
+            }
             if (fillFormAgrs.equals("true")) {
                 fillForms = true;
             }
         }
         catch (ArrayIndexOutOfBoundsException error) {
-            pageNotFoundTitle = "Page not found";
-            accessDeniedPageTitle = "Access denied";
-
         }
         System.out.println(host);
         System.out.println(builderName);
