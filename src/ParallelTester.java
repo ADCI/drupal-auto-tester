@@ -27,12 +27,8 @@ public class ParallelTester {
         catch (ArrayIndexOutOfBoundsException error) {
         }
 
-        try {
-            String accessDeniedPageTitleArgs = args[3];
-            accessDeniedPageTitle = accessDeniedPageTitleArgs;
-        }
-        catch (ArrayIndexOutOfBoundsException error) {
-        }
+        String accessDeniedPageTitleArgs = args[3];
+        accessDeniedPageTitle = accessDeniedPageTitleArgs;
 
         try {
             String needLoginArgs = args[4];
