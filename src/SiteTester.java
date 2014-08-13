@@ -19,24 +19,21 @@ public class SiteTester {
     private final DrupalController drupal;
     private final int browserType = 1; // 1 - firefox, 2 - chrome.
     final private int weekDay = java.util.Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-    // final private String filePath = "C:/drupal-test/screenshots/" + weekDay;
     final private String filePath = "";
     final private String errorPageFilePath = "screenshots//" + weekDay + "//error//";
-    // final private String everyPageFilePath = "screenshots/" + weekDay +
-    // "/allPage";
     final private String everyPageFilePath = "screenshots//" + weekDay + "//allPage//";
     final private String reportName = "report.log";
+
+    final private String host;
+    private final String builderName;
+    private final String pageNotFoundTitle;
+    private final String accessDeniedPageTitle;
+    private final int needLogin; // 0 - no login, 1 - login required, 2 -random
+                                 // login.
     private final String testUserLogin;
     private final String testUserPass;
-    final private String host;
-    private final String collectorName;
-    // public String testAddress = "http://clients.adciserver.com:8080/job/" +
-    // collectorName + "/ws";
-    private final String accessDeniedPageTitle = "Access denied";
-    private final String pageNotFoundTitle = "Page not found";
-    private final int needLogin; // 0 - no login, 1 - login required, 2 -
-                                 // random login.
     private final boolean fillForms;
+
     private final boolean resize = false;
     private final boolean takeScreenshots = false;
     private final int screenHeight = 700;
@@ -54,12 +51,14 @@ public class SiteTester {
     Map<String, String> parentagePagesPaths = new HashMap<String, String>();
 
     // Class constructor.
-    SiteTester(String host, String collectorName, String testUserLogin, String testUserPass, int needLogin, boolean fillForms) {
+    SiteTester(String host, String builderName, String pageNotFoundTitle, String accessDeniedPageTitle, int needLogin, String testUserLogin, String testUserPass, boolean fillForms) {
         this.host = host;
-        this.collectorName = collectorName;
+        this.builderName = builderName;
+        this.pageNotFoundTitle = pageNotFoundTitle;
+        this.accessDeniedPageTitle = accessDeniedPageTitle;
+        this.needLogin = needLogin;
         this.testUserLogin = testUserLogin;
         this.testUserPass = testUserPass;
-        this.needLogin = needLogin;
         this.fillForms = fillForms;
 
         this.browser = new BrowserDriver(this.filePath, this.browserType);
@@ -143,7 +142,7 @@ public class SiteTester {
     }
 
     private boolean pageErrorsProcess(String page, String screenshotName) {
-        String testAddress = "http://clients.adciserver.com:8080/job/" + collectorName + "/ws";
+        String testAddress = "http://clients.adciserver.com:8080/job/" + builderName + "/ws";
         boolean isErrorMessage = this.browser.isElemExist(".error");
         if (isErrorMessage) {
             // Take screenshot of error page
@@ -175,7 +174,7 @@ public class SiteTester {
         String link = null;
         String nextPage = null;
         int nodeNumber = 1;
-        String testAddress = "http://clients.adciserver.com:8080/job/" + collectorName + "/ws";
+        String testAddress = "http://clients.adciserver.com:8080/job/" + builderName + "/ws";
         this.browser.getPage(this.getHost());
         this.browser.chageScreenSize(this.defaultBrowserDimension);
         this.screenshotsDelete();
@@ -246,7 +245,7 @@ public class SiteTester {
     private boolean fillForm(String page) {
         WebElement submitButton = null;
         boolean formErrorMessage = false;
-        String testAddress = "http://clients.adciserver.com:8080/job/" + collectorName + "/ws";
+        String testAddress = "http://clients.adciserver.com:8080/job/" + builderName + "/ws";
         try {
             // Exclude login form and registration form.
             List<WebElement> formsOnPage = this.browser.getElems("form");

@@ -60,6 +60,8 @@
     	     	<arg value="${arg3}"/>
           	<arg value="${arg4}"/>
           	<arg value="${arg5}"/>
+            <arg value="${arg6}"/>
+            <arg value="${arg7}"/>
         </java>
     </target>
     <target name="SiteTester">

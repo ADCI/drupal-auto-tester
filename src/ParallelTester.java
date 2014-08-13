@@ -12,31 +12,35 @@ public class ParallelTester {
     int numThreads = 1;
 
     public static final void main(String[] args) throws InterruptedException, ExecutionException {
+        String host = args[0];
+        String builderName = args[1];
+        String pageNotFoundTitle = "Page not found";
+        String accessDeniedPageTitle = "Access denied";
+        int needLogin = 0;
         String testUserLogin = "";
         String testUserPass = "";
-        int needLogin = 0;
         boolean fillForms = false;
-        // String collectorName = "";
-        String host = args[0];
-        String collectorName = args[1];
         try {
-            // String collectorNameArgs = args[1];
-            String userLoginAgrs = args[2];
-            String userPassArgs = args[3];
+            String pageNotFoundTitleArgs = args[2];
+            String accessDeniedPageTitleArgs = args[3];
             String needLoginArgs = args[4];
-            String fillFormAgrs = args[5];
-
-            // if (!collectorNameArgs.equals("null")) {
-            // collectorName = collectorNameArgs;
-            // }
+            String userLoginAgrs = args[5];
+            String userPassArgs = args[6];
+            String fillFormAgrs = args[7];
+            if (!pageNotFoundTitleArgs.equals("null")) {
+                pageNotFoundTitle = pageNotFoundTitleArgs;
+            }
+            if (!accessDeniedPageTitleArgs.equals("null")) {
+                accessDeniedPageTitle = accessDeniedPageTitleArgs;
+            }
+            if (!needLoginArgs.equals("null")) {
+                needLogin = Integer.parseInt(needLoginArgs.toString());
+            }
             if (!userLoginAgrs.equals("null")) {
                 testUserLogin = userLoginAgrs;
             }
             if (!userPassArgs.equals("null")) {
                 testUserPass = userPassArgs;
-            }
-            if (!needLoginArgs.equals("null")) {
-                needLogin = Integer.parseInt(needLoginArgs.toString());
             }
             if (fillFormAgrs.equals("true")) {
                 fillForms = true;
@@ -46,14 +50,14 @@ public class ParallelTester {
         }
 
         ParallelTester tester = new ParallelTester();
-        tester.siteTesterParallelScan(host, collectorName, testUserLogin, testUserPass, needLogin, fillForms);
+        tester.siteTesterParallelScan(host, builderName, pageNotFoundTitle, accessDeniedPageTitle, needLogin, testUserLogin, testUserPass, fillForms);
     }
 
-    void siteTesterParallelScan(String host, String collectorName, String testUserLogin, String testUserPass, int needLogin, boolean fillForms) throws InterruptedException, ExecutionException {
+    void siteTesterParallelScan(String host, String builderName, String pageNotFoundTitle, String accessDeniedPageTitle, int needLogin, String testUserLogin, String testUserPass, boolean fillForms) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newFixedThreadPool(this.numThreads);
         CompletionService<String> compService = new ExecutorCompletionService<>(executor);
         for (int i = 0; i < this.numThreads; i++) {
-            Task task = new Task(host, collectorName, testUserLogin, testUserPass, needLogin, fillForms);
+            Task task = new Task(host, builderName, pageNotFoundTitle, accessDeniedPageTitle, needLogin, testUserLogin, testUserPass, fillForms);
             compService.submit(task);
         }
         for (int i = 0; i < this.numThreads; i++) {
@@ -66,24 +70,28 @@ public class ParallelTester {
     private final class Task implements Callable<String> {
 
         private final String host;
-        private final String collectorName;
+        private final String builderName;
+        private final String pageNotFoundTitle;
+        private final String accessDeniedPageTitle;
+        private final int needLogin;
         private final String testUserLogin;
         private final String testUserPass;
-        private final int needLogin;
         private final boolean fillForms;
 
-        public Task(String host, String collectorName, String testUserLogin, String testUserPass, int needLogin, boolean fillForms) {
+        public Task(String host, String builderName, String pageNotFoundTitle, String accessDeniedPageTitle, int needLogin, String testUserLogin, String testUserPass, boolean fillForms) {
             this.host = host;
-            this.collectorName = collectorName;
+            this.builderName = builderName;
+            this.pageNotFoundTitle = pageNotFoundTitle;
+            this.accessDeniedPageTitle = accessDeniedPageTitle;
+            this.needLogin = needLogin;
             this.testUserLogin = testUserLogin;
             this.testUserPass = testUserPass;
-            this.needLogin = needLogin;
             this.fillForms = fillForms;
         }
 
         @Override
         public String call() throws Exception {
-            SiteTester scanner = new SiteTester(this.host, this.collectorName, this.testUserLogin, this.testUserPass, this.needLogin, this.fillForms);
+            SiteTester scanner = new SiteTester(this.host, this.builderName, this.pageNotFoundTitle, this.accessDeniedPageTitle, this.needLogin, this.testUserLogin, this.testUserPass, this.fillForms);
             return scanner.siteTesterScan();
         }
     }
