@@ -46,6 +46,9 @@ public class ParallelTester {
             }
         }
         catch (ArrayIndexOutOfBoundsException error) {
+            pageNotFoundTitle = "Page not found";
+            accessDeniedPageTitle = "Access denied";
+
         }
         System.out.println(host);
         System.out.println(builderName);
