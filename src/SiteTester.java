@@ -127,6 +127,7 @@ public class SiteTester {
             String parentPage = this.getParentPage(page);
             String errorMessage = "Access denied! " + "Path: " + "Parent page - " + parentPage + ", Page - " + page;
             this.reporter.addErrorMessage(errorMessage);
+            System.out.println(errorMessage);
         }
         return isAccessDenied;
     }
@@ -136,7 +137,9 @@ public class SiteTester {
         if (ispageNotFound == true) {
             this.reporter.pageNotFoundAdd();
             String parentPage = this.getParentPage(page);
-            this.reporter.addErrorMessage("Page not found! " + "Path: " + "Parent page - " + parentPage + ", Page - " + page);
+            String errorMessage = "Page not found! " + "Path: " + "Parent page - " + parentPage + ", Page - " + page;
+            this.reporter.addErrorMessage(errorMessage);
+            System.out.println(errorMessage);
         }
         return ispageNotFound;
     }
@@ -151,7 +154,9 @@ public class SiteTester {
             reporter.ErrorAdd();
             // Add Error message to log
             String parentPage = this.getParentPage(page);
-            this.reporter.addErrorMessage("Error! " + "Path: " + "Parent page - " + parentPage + ", Error page - " + page + ", Screenshots - " + testAddress + "/" + errorPageFilePath + screenshotFileName + ".png");
+            String errorMessage = "Error! " + "Path: " + "Parent page - " + parentPage + ", Error page - " + page + ", Screenshots - " + testAddress + "/" + errorPageFilePath + screenshotFileName + ".png";
+            this.reporter.addErrorMessage(errorMessage);
+            System.out.println(errorMessage);
         }
         return isErrorMessage;
     }
