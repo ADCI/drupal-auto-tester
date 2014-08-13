@@ -32,13 +32,12 @@ public class ParallelTester {
 
             accessDeniedPageTitle = accessDeniedPageTitleArgs;
 
-            // try {
-            String needLoginString = needLoginArgs;
-            needLogin = Integer.parseInt(needLoginString.toString());
-            // }
-
-            // catch (NumberFormatException error) {
-            // }
+            try {
+                needLogin = Integer.parseInt(needLoginArgs.toString());
+            }
+            catch (NumberFormatException error) {
+                System.out.println("needLoginArgs value = " + needLoginArgs);
+            }
 
             testUserLogin = userLoginAgrs;
 
