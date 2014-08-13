@@ -54,14 +54,14 @@
     <target name="ParallelTester">
         <java classname="src.ParallelTester" failonerror="true" fork="yes">
             <classpath refid="drupal-auto-tester.classpath"/>
-        	  <arg value="${arg0}"/>
-    	      <arg value="${arg1}"/>
-          	<arg value="${arg2}"/>
-    	     	<arg value="${arg3}"/>
-          	<arg value="${arg4}"/>
-          	<arg value="${arg5}"/>
-            <arg value="${arg6}"/>
-            <arg value="${arg7}"/>
+        	  <arg value="${siteAddress}"/>
+    	      <arg value="${builderName}"/>
+          	<arg value="${pageNotFoundName}"/>
+    	     	<arg value="${AccessDeniedPageName}"/>
+          	<arg value="${needLogin}"/>
+          	<arg value="${login}"/>
+            <arg value="${password}"/>
+            <arg value="${fillForms}"/>
         </java>
     </target>
     <target name="SiteTester">
