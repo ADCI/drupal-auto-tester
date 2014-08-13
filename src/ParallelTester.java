@@ -42,9 +42,9 @@ public class ParallelTester {
             // if (!userPassArgs.equals("null")) {
             testUserPass = userPassArgs;
             // }
-            // if (fillFormAgrs.equals("true")) {
-            fillForms = true;
-            // }
+            if (fillFormAgrs.equals("true")) {
+                fillForms = true;
+            }
         }
         catch (ArrayIndexOutOfBoundsException error) {
         }
