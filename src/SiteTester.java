@@ -75,6 +75,8 @@ public class SiteTester {
         this.dontVisitPages.add(this.getHost() + "/user/logout");
         this.dontFillForm.add("user-login-form");
         this.dontFillForm.add("homedepot-search-books-form");
+        this.dontFillForm.add("sm-common-node-delete-confirm");
+        this.dontFillForm.add("node-delete-confirm");
         // Add resolutions.
         // this.resolutions.add(new Dimension(320, this.screenHeight));
         // this.resolutions.add(new Dimension(980, this.screenHeight));
@@ -178,7 +180,7 @@ public class SiteTester {
         List<String> currentPageLinks = new ArrayList<String>();
         String link = null;
         String nextPage = null;
-        int nodeNumber = 1;
+        int pageNumber = 1;
         String testAddress = "http://clients.adciserver.com:8080/job/" + builderName + "/ws";
         this.browser.getPage(this.getHost());
         this.browser.chageScreenSize(this.defaultBrowserDimension);
@@ -196,7 +198,7 @@ public class SiteTester {
                     this.resize(nextPage);
                 }
                 System.out.println(nextPage);
-                String screenshotName = nodeNumber + "";
+                String screenshotName = pageNumber + "";
                 browser.takeScreenshot(screenshotName, everyPageFilePath);
                 System.out.println(testAddress + "/" + everyPageFilePath + screenshotName + ".png");
                 // Add page to visited list
@@ -208,7 +210,7 @@ public class SiteTester {
                 pageNotFoundProcess(nextPage);
                 // Check there are no error messages on current page
                 pageErrorsProcess(nextPage, screenshotName);
-                nodeNumber++;
+                pageNumber++;
                 if (this.collectLinks) {
                     currentPageLinks = this.browser.getCurrentPageLinks();
                     // Mix list of current page links
@@ -222,7 +224,7 @@ public class SiteTester {
                 }
                 // Fill in any form on the current page
                 if (fillForms == true) {
-                    this.fillForm(nextPage);
+                    this.fillForm(nextPage, pageNumber);
                 }
             }
             catch (Exception exception) {
@@ -247,7 +249,7 @@ public class SiteTester {
         }
     }
 
-    private boolean fillForm(String page) {
+    private boolean fillForm(String page, int pageNumber) {
         WebElement submitButton = null;
         boolean formErrorMessage = false;
         String testAddress = "http://clients.adciserver.com:8080/job/" + builderName + "/ws";
@@ -257,7 +259,7 @@ public class SiteTester {
             for (int v = 0; v < formsOnPage.size(); v++) {
                 String idForm = formsOnPage.get(v).getAttribute("id");
                 String diezIdForm = ("#" + idForm);
-                String screenshotName = "form_id=" + idForm;
+                String screenshotName = "form_id=" + idForm + "_Page-" + pageNumber;
                 submitButton = this.browser.getElem(diezIdForm + " input[type='submit']");
                 List<WebElement> submitButtons = new ArrayList<WebElement>();
                 if (this.dontFillForm.contains(idForm)) {
