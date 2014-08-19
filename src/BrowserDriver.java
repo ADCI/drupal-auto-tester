@@ -217,7 +217,7 @@ public class BrowserDriver {
     }
 
     public String generateRandomString(boolean numbersOnly) {
-        String text = null;
+        String text = "";
         String characters = randomStringCharacters;
         if (numbersOnly) {
             characters = this.randomNumberStringCharacters;
@@ -225,7 +225,7 @@ public class BrowserDriver {
         Random random = new Random();
         int length = random.nextInt(9) + 1;
         for (int i = 0; i < length; i++) {
-            text = characters.charAt(random.nextInt(characters.length())) + "";
+            text += characters.charAt(random.nextInt(characters.length()));
         }
         return text;
     }
