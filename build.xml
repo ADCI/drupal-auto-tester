@@ -57,7 +57,7 @@
         	  <arg value="${siteAddress}"/>
     	      <arg value="${builderName}"/>
           	<arg value="${pageNotFoundName}"/>
-    	     	<arg value="${AccessDeniedPageName}"/>
+    	     	<arg value="${accessDeniedPageName}"/>
           	<arg value="${needLogin}"/>
           	<arg value="${login}"/>
             <arg value="${password}"/>
