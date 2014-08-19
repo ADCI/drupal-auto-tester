@@ -199,11 +199,8 @@ public class SiteTester {
                 }
                 System.out.println(nextPage);
                 String screenshotName = pageNumber + "";
-
-                // browser.takeScreenshot(screenshotName, everyPageFilePath);
-                // System.out.println(testAddress + "/" + everyPageFilePath +
-                // screenshotName + ".png");
-
+                browser.takeScreenshot(screenshotName, everyPageFilePath);
+                System.out.println(testAddress + "/" + everyPageFilePath + screenshotName + ".png");
                 // Add page to visited list
                 this.visitedPages.add(nextPage);
                 reporter.visitedPagesAdd();
@@ -268,7 +265,6 @@ public class SiteTester {
                     continue;
                 }
                 submitButton = this.browser.getElem(diezIdForm + " input[type='submit']");
-                System.out.println(idForm);
                 // Form infill
                 drupal.fieldsetsOpen(diezIdForm);
                 drupal.fillFormCheckboxes(diezIdForm);
