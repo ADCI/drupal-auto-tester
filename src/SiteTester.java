@@ -280,7 +280,6 @@ public class SiteTester {
                 // Form submit
                 for (int a = 0; a < submitButtons.size(); a++) {
                     try {
-                        System.out.println(this.browser.getParentElement(submitButton, 4));
                         submitButton.click();
                         this.reporter.formSubmittedAdd();
                         break;
