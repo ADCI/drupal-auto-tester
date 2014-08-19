@@ -245,4 +245,17 @@ public class BrowserDriver {
         }
     }
 
+    public String getParentElement(WebElement element, int level) {
+        int i = 1;
+        String path = "..";
+        while (level > i) {
+            i++;
+            path = path + "/..";
+        }
+        WebElement elementParent = null;
+        elementParent = element.findElement(By.xpath(path));
+        String elementParentId = elementParent.getAttribute("id");
+        return elementParentId;
+    }
+
 }
