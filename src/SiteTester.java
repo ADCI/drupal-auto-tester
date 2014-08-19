@@ -263,11 +263,11 @@ public class SiteTester {
                 String idForm = formsOnPage.get(v).getAttribute("id");
                 String diezIdForm = ("#" + idForm);
                 String screenshotName = "form_id=" + idForm + "_Page-" + pageNumber;
-                submitButton = this.browser.getElem(diezIdForm + " input[type='submit']");
                 List<WebElement> submitButtons = new ArrayList<WebElement>();
                 if (this.dontFillForm.contains(idForm)) {
                     continue;
                 }
+                submitButton = this.browser.getElem(diezIdForm + " input[type='submit']");
                 System.out.println(idForm);
                 // Form infill
                 drupal.fieldsetsOpen(diezIdForm);
