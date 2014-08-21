@@ -174,7 +174,7 @@ public class BrowserDriver {
                     href = pageLinkElems.get(i).getAttribute("href");
                 }
                 catch (Exception exception) {
-                    System.out.println("Vot on");
+                    // System.out.println("Vot on");
                 }
                 if (href != null && !href.isEmpty()) {
                     pageLinks.add(href);

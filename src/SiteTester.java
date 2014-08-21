@@ -34,8 +34,8 @@ public class SiteTester {
     private final String testUserPass;
     private final boolean fillForms;
 
-    private final boolean resize = false;
-    private final boolean takeScreenshots = false;
+    private final boolean resize = true;
+    private final boolean takeScreenshots = true;
     private final int screenHeight = 700;
     private final Dimension defaultBrowserDimension = new Dimension(1200, this.screenHeight);
     private final List<Dimension> resolutions = new ArrayList<Dimension>();
@@ -194,13 +194,17 @@ public class SiteTester {
             }
             try {
                 this.browser.getPage(nextPage);
-                if (this.resize) {
-                    this.resize(nextPage);
-                }
                 System.out.println(nextPage);
                 String screenshotName = pageNumber + "";
-                browser.takeScreenshot(screenshotName, everyPageFilePath);
-                System.out.println(testAddress + "/" + everyPageFilePath + screenshotName + ".png");
+                if (this.resize) {
+                    this.resize(screenshotName);
+
+                }
+
+                // String screenshotName = pageNumber + "";
+                // browser.takeScreenshot(screenshotName, everyPageFilePath);
+                // System.out.println(testAddress + "/" + everyPageFilePath +
+                // screenshotName + ".png");
                 // Add page to visited list
                 this.visitedPages.add(nextPage);
                 reporter.visitedPagesAdd();
@@ -238,13 +242,16 @@ public class SiteTester {
         return "Done";
     }
 
-    private void resize(String page) {
+    private void resize(String fileName) {
+        String testAddress = "http://clients.adciserver.com:8080/job/" + builderName + "/ws";
         for (int i = 0; i < this.resolutions.size(); i++) {
             Dimension res = this.resolutions.get(i);
             this.browser.chageScreenSize(res);
             if (this.takeScreenshots) {
-                page = page.replaceAll(this.host, "");
-                this.browser.takeScreenshot("page-" + page + "-" + res.width + "-" + res.height, errorPageFilePath);
+                // page = page.replaceAll(this.host, "");
+                String resazeFileName = fileName + "-" + res.width + "-" + res.height;
+                this.browser.takeScreenshot(resazeFileName, everyPageFilePath);
+                System.out.println(testAddress + "/" + everyPageFilePath + resazeFileName + ".png");
             }
         }
     }
