@@ -275,6 +275,8 @@ public class SiteTester {
                     drupal.fillFormSelect(diezIdForm);
                     drupal.fillFormText(diezIdForm);
                     drupal.fillFormNumber(diezIdForm);
+                    this.browser.takeScreenshot(screenshotName, everyPageFilePath);
+                    System.out.println(testAddress + "/" + everyPageFilePath + screenshotName + ".png");
                     if (submitButton != null) {
                         submitButtons.add(submitButton);
                     }
