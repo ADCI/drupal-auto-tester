@@ -77,6 +77,7 @@ public class SiteTester {
         this.dontFillForm.add("homedepot-search-books-form");
         this.dontFillForm.add("sm-common-node-delete-confirm");
         this.dontFillForm.add("node-delete-confirm");
+        this.dontFillForm.add("edit-search");
         // Add resolutions.
         this.resolutions.add(new Dimension(320, this.screenHeight));
         // this.resolutions.add(new Dimension(980, this.screenHeight));
