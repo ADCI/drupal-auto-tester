@@ -268,44 +268,44 @@ public class SiteTester {
                 String diezIdForm = ("#" + idForm);
                 String screenshotName = "form_id=" + idForm + "_Page-" + pageNumber;
                 List<WebElement> submitButtons = new ArrayList<WebElement>();
-                if (this.dontFillForm.contains(idForm)) {
-                    System.out.println("Dont fill form" + idForm);
+                if (!this.dontFillForm.contains(idForm)) {
                     continue;
                 }
-                submitButton = this.browser.getElem(diezIdForm + " input[type='submit']");
-                // Form infill
-                System.out.println("Fill form!" + idForm);
-                drupal.fieldsetsOpen(diezIdForm);
-                drupal.fillFormCheckboxes(diezIdForm);
-                drupal.fillFormRadios(diezIdForm);
-                drupal.fillFormSelect(diezIdForm);
-                drupal.fillFormText(diezIdForm);
-                drupal.fillFormNumber(diezIdForm);
-                if (submitButton != null) {
-                    submitButtons.add(submitButton);
-                }
-                // Mix submits
-                Collections.shuffle(submitButtons);
-                // Form submit
-                for (int a = 0; a < submitButtons.size(); a++) {
-                    try {
-                        submitButton.click();
-                        this.reporter.formSubmittedAdd();
-                        break;
+                else {
+                    submitButton = this.browser.getElem(diezIdForm + " input[type='submit']");
+                    // Form infill
+                    drupal.fieldsetsOpen(diezIdForm);
+                    drupal.fillFormCheckboxes(diezIdForm);
+                    drupal.fillFormRadios(diezIdForm);
+                    drupal.fillFormSelect(diezIdForm);
+                    drupal.fillFormText(diezIdForm);
+                    drupal.fillFormNumber(diezIdForm);
+                    if (submitButton != null) {
+                        submitButtons.add(submitButton);
                     }
-                    catch (NoSuchElementException error) {
-                        continue;
+                    // Mix submits
+                    Collections.shuffle(submitButtons);
+                    // Form submit
+                    for (int a = 0; a < submitButtons.size(); a++) {
+                        try {
+                            submitButton.click();
+                            this.reporter.formSubmittedAdd();
+                            break;
+                        }
+                        catch (NoSuchElementException error) {
+                            continue;
+                        }
                     }
-                }
-                this.browser.waitWhile(".ajax-throbber");
-                this.browser.waitWhile(".filled");
-                formErrorMessage = this.browser.isElemExist(".error");
-                if (formErrorMessage) {
-                    this.reporter.formErrorAdd();
-                    // Take screen shot of error page
-                    this.browser.takeScreenshot(screenshotName, errorPageFilePath);
-                    // Add Error message to log
-                    this.reporter.addErrorMessage("Form Error! Page - " + page + ", " + screenshotName + ", Screenshots - " + testAddress + "/" + errorPageFilePath + screenshotName + ".png");
+                    this.browser.waitWhile(".ajax-throbber");
+                    this.browser.waitWhile(".filled");
+                    formErrorMessage = this.browser.isElemExist(".error");
+                    if (formErrorMessage) {
+                        this.reporter.formErrorAdd();
+                        // Take screen shot of error page
+                        this.browser.takeScreenshot(screenshotName, errorPageFilePath);
+                        // Add Error message to log
+                        this.reporter.addErrorMessage("Form Error! Page - " + page + ", " + screenshotName + ", Screenshots - " + testAddress + "/" + errorPageFilePath + screenshotName + ".png");
+                    }
                 }
             }
         }
