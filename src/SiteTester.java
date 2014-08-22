@@ -269,10 +269,12 @@ public class SiteTester {
                 String screenshotName = "form_id=" + idForm + "_Page-" + pageNumber;
                 List<WebElement> submitButtons = new ArrayList<WebElement>();
                 if (this.dontFillForm.contains(idForm)) {
+                    System.out.println("Dont fill form" + idForm);
                     continue;
                 }
                 submitButton = this.browser.getElem(diezIdForm + " input[type='submit']");
                 // Form infill
+                System.out.println("Fill form!" + idForm);
                 drupal.fieldsetsOpen(diezIdForm);
                 drupal.fillFormCheckboxes(diezIdForm);
                 drupal.fillFormRadios(diezIdForm);
