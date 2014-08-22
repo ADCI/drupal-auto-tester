@@ -78,7 +78,7 @@ public class SiteTester {
         this.dontFillForm.add("sm-common-node-delete-confirm");
         this.dontFillForm.add("node-delete-confirm");
         // Add resolutions.
-        // this.resolutions.add(new Dimension(320, this.screenHeight));
+        this.resolutions.add(new Dimension(320, this.screenHeight));
         // this.resolutions.add(new Dimension(980, this.screenHeight));
         this.resolutions.add(new Dimension(1024, this.screenHeight));
         this.resolutions.add(new Dimension(1400, this.screenHeight));
@@ -200,11 +200,6 @@ public class SiteTester {
                     this.resize(screenshotName);
 
                 }
-
-                // String screenshotName = pageNumber + "";
-                // browser.takeScreenshot(screenshotName, everyPageFilePath);
-                // System.out.println(testAddress + "/" + everyPageFilePath +
-                // screenshotName + ".png");
                 // Add page to visited list
                 this.visitedPages.add(nextPage);
                 reporter.visitedPagesAdd();
