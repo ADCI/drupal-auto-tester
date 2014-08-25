@@ -333,9 +333,8 @@ public class SiteTester {
     }
 
     private void screenshotsDelete() {
-        // browser.filesDelete("screenshots//" + weekDay + "//allPage");
-        // browser.filesDelete("screenshots//" + weekDay + "//error");
-        browser.filesDelete("screenshots//" + weekDay);
+        browser.filesDelete("screenshots//" + weekDay + "//allPage");
+        browser.filesDelete("screenshots//" + weekDay + "//error");
     }
 
 }
