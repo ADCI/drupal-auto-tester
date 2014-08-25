@@ -164,7 +164,7 @@ public class SiteTester {
                 String parentPage = this.getParentPage(page);
                 String reportMessage = "Error! " + "Path: " + "Parent page - " + parentPage + ", Error page - " + page + ", Screenshots - " + testAddress + "/" + errorPageFilePath + screenshotFileName + ".png";
                 this.reporter.addErrorMessage(reportMessage);
-                System.out.println(errorMessage);
+                System.out.println(reportMessage);
                 return true;
             }
         }
