@@ -149,17 +149,24 @@ public class SiteTester {
 
     private boolean pageErrorsProcess(String page, String screenshotName) {
         String testAddress = "http://clients.adciserver.com:8080/job/" + builderName + "/ws";
-        boolean isErrorMessage = this.browser.isElemExist(".error");
-        if (isErrorMessage) {
-            // Take screenshot of error page
-            String screenshotFileName = "errorPage-" + screenshotName;
-            this.browser.takeScreenshot(screenshotFileName, errorPageFilePath);
-            reporter.ErrorAdd();
-            // Add Error message to log
-            String parentPage = this.getParentPage(page);
-            String errorMessage = "Error! " + "Path: " + "Parent page - " + parentPage + ", Error page - " + page + ", Screenshots - " + testAddress + "/" + errorPageFilePath + screenshotFileName + ".png";
-            this.reporter.addErrorMessage(errorMessage);
-            System.out.println(errorMessage);
+        // boolean isErrorMessage = this.browser.isElemExist(".error");
+        boolean isErrorMessage = false;
+        List<WebElement> errorMessages = this.browser.getElems(".error");
+        for (int i = 0; i < errorMessages.size(); i++) {
+            WebElement errorMessage = errorMessages.get(i);
+            isErrorMessage = errorMessage.isDisplayed();
+            if (isErrorMessage) {
+                // Take screenshot of error page
+                String screenshotFileName = "errorPage-" + screenshotName;
+                this.browser.takeScreenshot(screenshotFileName, errorPageFilePath);
+                reporter.ErrorAdd();
+                // Add Error message to log
+                String parentPage = this.getParentPage(page);
+                String reportMessage = "Error! " + "Path: " + "Parent page - " + parentPage + ", Error page - " + page + ", Screenshots - " + testAddress + "/" + errorPageFilePath + screenshotFileName + ".png";
+                this.reporter.addErrorMessage(reportMessage);
+                System.out.println(errorMessage);
+                return true;
+            }
         }
         return isErrorMessage;
     }
