@@ -289,7 +289,6 @@ public class SiteTester {
                     for (int a = 0; a < submitButtons.size(); a++) {
                         try {
                             submitButton.click();
-                            System.out.println(submitButton);
                             this.reporter.formSubmittedAdd();
                             break;
                         }
