@@ -261,13 +261,13 @@ public class SiteTester {
             List<WebElement> formsOnPage = this.browser.getElems("form");
             for (int v = 0; v < formsOnPage.size(); v++) {
                 String idForm = formsOnPage.get(v).getAttribute("id");
-                String diezIdForm = ("#" + idForm);
-                String screenshotName = "form_id=" + idForm + "_Page-" + pageNumber;
-                List<WebElement> submitButtons = new ArrayList<WebElement>();
-                if (!this.dontFillForm.contains(idForm)) {
+                if (this.dontFillForm.contains(idForm)) {
                     continue;
                 }
                 else {
+                    String diezIdForm = ("#" + idForm);
+                    String screenshotName = "form_id=" + idForm + "_Page-" + pageNumber;
+                    List<WebElement> submitButtons = new ArrayList<WebElement>();
                     submitButton = this.browser.getElem(diezIdForm + " input[type='submit']");
                     // Form infill
                     drupal.fieldsetsOpen(diezIdForm);
