@@ -276,8 +276,10 @@ public class SiteTester {
                     drupal.fillFormSelect(diezIdForm);
                     drupal.fillFormText(diezIdForm);
                     drupal.fillFormNumber(diezIdForm);
-                    this.browser.takeScreenshot(screenshotName, everyPageFilePath);
-                    System.out.println(testAddress + "/" + everyPageFilePath + screenshotName + ".png");
+                    // this.browser.takeScreenshot(screenshotName,
+                    // everyPageFilePath);
+                    // System.out.println(testAddress + "/" + everyPageFilePath
+                    // + screenshotName + ".png");
                     if (submitButton != null) {
                         submitButtons.add(submitButton);
                     }
@@ -287,6 +289,7 @@ public class SiteTester {
                     for (int a = 0; a < submitButtons.size(); a++) {
                         try {
                             submitButton.click();
+                            System.out.println(submitButton);
                             this.reporter.formSubmittedAdd();
                             break;
                         }
