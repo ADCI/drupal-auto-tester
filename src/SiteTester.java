@@ -245,9 +245,9 @@ public class SiteTester {
             this.browser.chageScreenSize(res);
             if (this.takeScreenshots) {
                 // page = page.replaceAll(this.host, "");
-                String resazeFileName = fileName + "-" + res.width + "-" + res.height;
-                this.browser.takeScreenshot(resazeFileName, everyPageFilePath);
-                System.out.println(testAddress + "/" + everyPageFilePath + resazeFileName + ".png");
+                String resizeFileName = fileName + "-" + res.width + "-" + res.height;
+                this.browser.takeScreenshot(resizeFileName, everyPageFilePath);
+                System.out.println(testAddress + "/" + everyPageFilePath + resizeFileName + ".png");
             }
         }
     }
@@ -333,8 +333,9 @@ public class SiteTester {
     }
 
     private void screenshotsDelete() {
-        browser.filesDelete("screenshots//" + weekDay + "//allPage");
-        browser.filesDelete("screenshots//" + weekDay + "//error");
+        // browser.filesDelete("screenshots//" + weekDay + "//allPage");
+        // browser.filesDelete("screenshots//" + weekDay + "//error");
+        browser.filesDelete("screenshots//" + weekDay);
     }
 
 }
