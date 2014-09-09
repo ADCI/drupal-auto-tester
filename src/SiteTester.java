@@ -235,8 +235,9 @@ public class SiteTester {
                             }
                         }
                         if (filterLinksGetOption) {
-                            link = this.filterQuery(this.getHost(), link);
+                            link = this.getOptionFilter(this.getHost(), link);
                         }
+                        link = anchorFilter(link);
                         parentagePagesPaths.put(link, nextPage);
                         this.pagesToVisit.add(link);
                     }
@@ -334,7 +335,7 @@ public class SiteTester {
         return true;
     }
 
-    private String filterQuery(String host, String query) {
+    private String getOptionFilter(String host, String query) {
         int queryParamsIndex = 0;
         // Remove GET parameters from query
         queryParamsIndex = query.indexOf("?");
@@ -342,14 +343,25 @@ public class SiteTester {
             query = query.substring(0, queryParamsIndex);
         }
         // Remove anchor
-        queryParamsIndex = query.indexOf("#");
-        if (queryParamsIndex > 0) {
-            query = query.substring(0, queryParamsIndex);
-        }
+        // queryParamsIndex = query.indexOf("#");
+        // if (queryParamsIndex > 0) {
+        // query = query.substring(0, queryParamsIndex);
+        // }
         // if (!query.contains(host) && visitOnlyCurrentHost == true) {
         // query = "";
         // }
         return query;
+    }
+
+    private String anchorFilter(String link) {
+        int queryParamsIndex = 0;
+        // Remove anchor
+        queryParamsIndex = link.indexOf("#");
+        if (queryParamsIndex > 0) {
+            String query = link.substring(0, queryParamsIndex);
+            return query;
+        }
+        return link;
     }
 
     private void screenshotsDelete() {
