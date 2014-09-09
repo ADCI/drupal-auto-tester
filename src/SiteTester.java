@@ -198,7 +198,6 @@ public class SiteTester {
         this.screenshotsDelete();
         for (int i = 0; i < this.pagesToVisit.size(); i++) {
             nextPage = this.pagesToVisit.get(i);
-            System.out.println("Next page - " + nextPage);
             // nextPage = this.filterQuery(this.getHost(), nextPage);
             // Check if next page should be processed.
             if (this.skipPage(nextPage)) {
