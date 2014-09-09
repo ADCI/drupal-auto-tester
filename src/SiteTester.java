@@ -210,7 +210,6 @@ public class SiteTester {
                 String screenshotName = pageNumber + "";
                 if (this.resize) {
                     this.resize(screenshotName);
-
                 }
                 // Add page to visited list
                 this.visitedPages.add(nextPage);
@@ -228,11 +227,15 @@ public class SiteTester {
                     Collections.shuffle(currentPageLinks);
                     // Add Pages paths
                     for (int j = 0; j < currentPageLinks.size(); j++) {
-                        if (filterLinksGetOption) {
-                            link = this.filterQuery(this.getHost(), currentPageLinks.get(j));
+                        link = currentPageLinks.get(j);
+                        // Check current host
+                        if (visitOnlyCurrentHost) {
+                            if (!link.contains(host)) {
+                                continue;
+                            }
                         }
-                        else {
-                            link = currentPageLinks.get(j);
+                        if (filterLinksGetOption) {
+                            link = this.filterQuery(this.getHost(), link);
                         }
                         parentagePagesPaths.put(link, nextPage);
                         this.pagesToVisit.add(link);
@@ -343,9 +346,9 @@ public class SiteTester {
         if (queryParamsIndex > 0) {
             query = query.substring(0, queryParamsIndex);
         }
-        if (!query.contains(host) && visitOnlyCurrentHost == true) {
-            query = "";
-        }
+        // if (!query.contains(host) && visitOnlyCurrentHost == true) {
+        // query = "";
+        // }
         return query;
     }
 
