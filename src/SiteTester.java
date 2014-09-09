@@ -204,6 +204,7 @@ public class SiteTester {
             if (this.skipPage(nextPage)) {
                 continue;
             }
+            System.out.println("Next page - " + nextPage);
             try {
                 this.browser.getPage(nextPage);
                 System.out.println(nextPage);
