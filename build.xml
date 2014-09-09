@@ -62,6 +62,7 @@
           	<arg value="${login}"/>
             <arg value="${password}"/>
             <arg value="${fillForms}"/>
+        	  <arg value="${filterLinksGetOption}"/>
         </java>
     </target>
     <target name="SiteTester">
