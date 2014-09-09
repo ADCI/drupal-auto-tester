@@ -20,6 +20,7 @@ public class ParallelTester {
         String testUserLogin = "";
         String testUserPass = "";
         boolean fillForms = false;
+        boolean filterLinksGetOption = false;
         try {
             String pageNotFoundTitleArgs = args[2];
             String accessDeniedPageTitleArgs = args[3];
@@ -27,6 +28,7 @@ public class ParallelTester {
             String userLoginAgrs = args[5];
             String userPassArgs = args[6];
             String fillFormAgrs = args[7];
+            String filterLinksGetOptionAgrs = args[8];
 
             if (!pageNotFoundTitleArgs.equals("null")) {
                 pageNotFoundTitle = pageNotFoundTitleArgs;
@@ -50,19 +52,22 @@ public class ParallelTester {
             if (fillFormAgrs.equals("true")) {
                 fillForms = true;
             }
+            if (filterLinksGetOptionAgrs.equals("true")) {
+                filterLinksGetOption = true;
+            }
         }
         catch (ArrayIndexOutOfBoundsException error) {
         }
 
         ParallelTester tester = new ParallelTester();
-        tester.siteTesterParallelScan(host, builderName, pageNotFoundTitle, accessDeniedPageTitle, needLogin, testUserLogin, testUserPass, fillForms);
+        tester.siteTesterParallelScan(host, builderName, pageNotFoundTitle, accessDeniedPageTitle, needLogin, testUserLogin, testUserPass, fillForms, filterLinksGetOption);
     }
 
-    void siteTesterParallelScan(String host, String builderName, String pageNotFoundTitle, String accessDeniedPageTitle, int needLogin, String testUserLogin, String testUserPass, boolean fillForms) throws InterruptedException, ExecutionException {
+    void siteTesterParallelScan(String host, String builderName, String pageNotFoundTitle, String accessDeniedPageTitle, int needLogin, String testUserLogin, String testUserPass, boolean fillForms, boolean filterLinksGetOption) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newFixedThreadPool(this.numThreads);
         CompletionService<String> compService = new ExecutorCompletionService<>(executor);
         for (int i = 0; i < this.numThreads; i++) {
-            Task task = new Task(host, builderName, pageNotFoundTitle, accessDeniedPageTitle, needLogin, testUserLogin, testUserPass, fillForms);
+            Task task = new Task(host, builderName, pageNotFoundTitle, accessDeniedPageTitle, needLogin, testUserLogin, testUserPass, fillForms, filterLinksGetOption);
             compService.submit(task);
         }
         for (int i = 0; i < this.numThreads; i++) {
@@ -82,8 +87,9 @@ public class ParallelTester {
         private final String testUserLogin;
         private final String testUserPass;
         private final boolean fillForms;
+        private final boolean filterLinksGetOption;
 
-        public Task(String host, String builderName, String pageNotFoundTitle, String accessDeniedPageTitle, int needLogin, String testUserLogin, String testUserPass, boolean fillForms) {
+        public Task(String host, String builderName, String pageNotFoundTitle, String accessDeniedPageTitle, int needLogin, String testUserLogin, String testUserPass, boolean fillForms, boolean filterLinksGetOption) {
             this.host = host;
             this.builderName = builderName;
             this.pageNotFoundTitle = pageNotFoundTitle;
@@ -92,11 +98,12 @@ public class ParallelTester {
             this.testUserLogin = testUserLogin;
             this.testUserPass = testUserPass;
             this.fillForms = fillForms;
+            this.filterLinksGetOption = filterLinksGetOption;
         }
 
         @Override
         public String call() throws Exception {
-            SiteTester scanner = new SiteTester(this.host, this.builderName, this.pageNotFoundTitle, this.accessDeniedPageTitle, this.needLogin, this.testUserLogin, this.testUserPass, this.fillForms);
+            SiteTester scanner = new SiteTester(this.host, this.builderName, this.pageNotFoundTitle, this.accessDeniedPageTitle, this.needLogin, this.testUserLogin, this.testUserPass, this.fillForms, this.filterLinksGetOption);
             return scanner.siteTesterScan();
         }
     }

@@ -26,6 +26,7 @@ public class SiteTester {
 
     final private String host;
     private final String builderName;
+
     private final String pageNotFoundTitle;
     private final String accessDeniedPageTitle;
     private final int needLogin; // 0 - no login, 1 - login required, 2 -random
@@ -33,6 +34,7 @@ public class SiteTester {
     private final String testUserLogin;
     private final String testUserPass;
     private final boolean fillForms;
+    private final boolean filterLinksGetOption;
 
     private final boolean resize = true;
     private final boolean takeScreenshots = true;
@@ -51,7 +53,7 @@ public class SiteTester {
     Map<String, String> parentagePagesPaths = new HashMap<String, String>();
 
     // Class constructor.
-    SiteTester(String host, String builderName, String pageNotFoundTitle, String accessDeniedPageTitle, int needLogin, String testUserLogin, String testUserPass, boolean fillForms) {
+    SiteTester(String host, String builderName, String pageNotFoundTitle, String accessDeniedPageTitle, int needLogin, String testUserLogin, String testUserPass, boolean fillForms, boolean filterLinksGetOption) {
         this.host = host;
         this.builderName = builderName;
         this.pageNotFoundTitle = pageNotFoundTitle;
@@ -60,6 +62,7 @@ public class SiteTester {
         this.testUserLogin = testUserLogin;
         this.testUserPass = testUserPass;
         this.fillForms = fillForms;
+        this.filterLinksGetOption = filterLinksGetOption;
 
         this.browser = new BrowserDriver(this.filePath, this.browserType);
         this.reporter = new Reporter();
@@ -195,7 +198,9 @@ public class SiteTester {
         this.screenshotsDelete();
         for (int i = 0; i < this.pagesToVisit.size(); i++) {
             nextPage = this.pagesToVisit.get(i);
-            nextPage = this.filterQuery(this.getHost(), nextPage);
+            if (filterLinksGetOption) {
+                nextPage = this.filterQuery(this.getHost(), nextPage);
+            }
             // Check if next page should be processed.
             if (this.skipPage(nextPage)) {
                 continue;
@@ -241,6 +246,7 @@ public class SiteTester {
         this.reporter.reportConsole();
         System.out.println("Report file - " + testAddress + "/" + errorPageFilePath + "report.log");
         this.reporter.reportFile(this.reportName, this.errorPageFilePath);
+        System.out.println("Download screenshots archive - " + testAddress + "/" + everyPageFilePath + "*zip*/allPage.zip");
         this.browser.closeBrowser();
         return "Done";
     }
