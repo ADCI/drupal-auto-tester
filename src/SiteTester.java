@@ -198,12 +198,9 @@ public class SiteTester {
         this.screenshotsDelete();
         for (int i = 0; i < this.pagesToVisit.size(); i++) {
             nextPage = this.pagesToVisit.get(i);
-            if (filterLinksGetOption) {
-                nextPage = this.filterQuery(this.getHost(), nextPage);
-            }
+            nextPage = this.filterQuery(this.getHost(), nextPage);
             // Check if next page should be processed.
             if (this.skipPage(nextPage)) {
-                System.out.println("SkipPage!!! - " + nextPage);
                 continue;
             }
             try {
@@ -230,7 +227,12 @@ public class SiteTester {
                     Collections.shuffle(currentPageLinks);
                     // Add Pages paths
                     for (int j = 0; j < currentPageLinks.size(); j++) {
-                        link = this.filterQuery(this.getHost(), currentPageLinks.get(j));
+                        if (filterLinksGetOption) {
+                            link = this.filterQuery(this.getHost(), currentPageLinks.get(j));
+                        }
+                        else {
+                            link = currentPageLinks.get(j);
+                        }
                         parentagePagesPaths.put(link, nextPage);
                         this.pagesToVisit.add(link);
                     }
