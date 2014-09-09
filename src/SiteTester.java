@@ -199,6 +199,7 @@ public class SiteTester {
         for (int i = 0; i < this.pagesToVisit.size(); i++) {
             nextPage = this.pagesToVisit.get(i);
             if (filterLinksGetOption) {
+                System.out.println("Get Option filetr true!");
                 nextPage = this.filterQuery(this.getHost(), nextPage);
             }
             // Check if next page should be processed.
