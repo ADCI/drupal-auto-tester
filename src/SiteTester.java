@@ -120,10 +120,6 @@ public class SiteTester {
     }
 
     private boolean skipPage(String page) {
-        for (int i = 0; i < this.dontVisitPages.size(); i++) {
-            String test = this.dontVisitPages.get(i);
-            System.out.println("dontVisitPages - " + test);
-        }
         if (page.isEmpty() || this.visitedPages.contains(page) || this.dontVisitPages.contains(page)) {
             return true;
         }
